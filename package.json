@@ -1,0 +1,25 @@
+{
+  "name": "first-nodejs-project",
+  "version": "1.0.0",
+  "description": "Creating a log-in page with express, mysql, redis, and passport.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanMello/first-nodejs-project-login-page.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanMello/first-nodejs-project-login-page/issues"
+  },
+  "homepage": "https://github.com/DanMello/first-nodejs-project-login-page#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "pm2": "^2.6.1"
+  }
+}
