@@ -4,17 +4,7 @@ const session = require('express-session')
 const favicon = require('serve-favicon')
 const staticAssets = __dirname + '/public'
 const faviconPath = __dirname + "/public/favicon.ico"
-const knex = require('knex')
-
-const db = knex({
-    client: 'mysql',
-    connection: {
-        host: '172.16.60.134',
-        user: 'deploy',
-        password: 'test',
-        database: 'nodejs_app',
-    }
-})
+const db = require('./db')
 
 express()
     .set('view engine', 'ejs')
