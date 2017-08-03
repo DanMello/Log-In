@@ -10,7 +10,7 @@ module.exports = {
       name      : 'nodejs-app',
       script    : 'index.js',
       env_production : {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production' 
       }
     }
   ],

@@ -24,7 +24,7 @@ express()
         console.log("request received")
         
     })
-    .get('/static', (req, res, next) => {
-        res.render('pages/index')
+    .get('/login', (req, res, next) => {
+        res.render('pages/login')
     })
     .listen(3000)
