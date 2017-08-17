@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <style>
 * {
 	margin: 0;
@@ -52,6 +51,12 @@
 	font-size: 15px;
 	text-decoration: none;
 	color: #3366FF;
+}
+#loginError {
+	position: absolute;
+	color: red;
+	right: 135px;
+	bottom: -25px;
 }
 /*Container for Summary and Sign up form*/
 #mainContainer {
@@ -136,8 +141,10 @@
 	border: 1px solid lightgrey;
 	cursor: pointer;
 }
-.errorText {
+.errorText{
 	color: red;
+	align-self: flex-end;
+	font-size: 15px;
 }
 </style>
 </head>
@@ -145,12 +152,20 @@
 
 <header id="headerContainer">
 
+	<%if (errors.loginErrors.length > 0) { %>
+
+		<% var loginErrors = errors.loginErrors %>
+
+		<% var username = body[0].username %>
+
+	<% } %>
+
 	<h1 id="mainHeading">Dans App</h1>
 
 	<form id="loginForm" action="/login" method="post">
 		<div class="loginItems">
 			<label>Username or Email:</label>
-			<input type="text" name="username">
+			<input type="text" name="username" value="<%= username %>">
 		</div>
 		<div class="loginItems">
 			<label>Password:</label>
@@ -160,8 +175,9 @@
 			<input id="loginButton" type="submit" value="Log In" name="Log In">
 		</div>
 		<div id="recoverAccount">
-			<a href="/#">Forgot Username/Password</a>
+			<a href="/#">Forgot account?</a>
 		</div>
+		<div id="loginError"><%= loginErrors %></div>
 	</form>
 
 </header>
@@ -191,13 +207,13 @@
 		<p id="registerExplanation">Just fill out this simple form. (All fields required)</p>
 
 		<form id="signupForm" action="/signup" method="post">
-		
-			<%if (errors.length > 0) { %>
 
-				<% var fullnameError = errors[0].fullname !== undefined ? errors[0].fullname.msg : '' %>
-				<% var usernameError = errors[0].userid !== undefined ? errors[0].userid.msg : '' %>
-				<% var emailError = errors[0].username !== undefined ? errors[0].username.msg : '' %>
-				<% var passwordError = errors[0].password !== undefined ? errors[0].password.msg : '' %>
+			<%if (errors.formErrors.length > 0) { %>
+
+				<% var fullnameError = errors.formErrors[0].fullname !== undefined ? errors.formErrors[0].fullname.msg : '' %>
+				<% var usernameError = errors.formErrors[0].userid !== undefined ? errors.formErrors[0].userid.msg : '' %>
+				<% var emailError = errors.formErrors[0].username !== undefined ? errors.formErrors[0].username.msg : '' %>
+				<% var passwordError = errors.formErrors[0].password !== undefined ? errors.formErrors[0].password.msg : '' %>
 
 				<% var fullnamePassed = body[0].fullname %>
 				<% var usernamePassed = body[0].userid %>
@@ -205,7 +221,7 @@
 				<% var passwordPassed = body[0].password %>
 
 			<% } %>
-
+			
 			<div class="signupItems">
 				<label>Full Name:</label>
 				<input type="text" name="fullname" value="<%= fullnamePassed %>">

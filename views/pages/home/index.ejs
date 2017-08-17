@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+/*Header and nav*/
+#main-nav-container {
+	background: lightgrey;
+	height: 70px;
+	display: flex;
+	justify-content: space-around;
+}
+#mainHeading-container {
+	display: flex;
+	color: white;
+	font-size: 22px;
+	margin-left: 10px;
+}
+#mainHeading {
+	align-self: center;
+}
+/*body*/
+#main-body-container {
+	display: flex;
+	justify-content: center;
+}
+#sub-body-container {
+	display: flex;
+	width: 50%;
+}
+</style>
+</head>
+<body>
+
+<nav id="main-nav-container">
+	
+    <div id="mainHeading-container">
+    	
+    	<h1 id="mainHeading">Dans App</h1>
+
+    </div>
+
+    <div id="profileicon-container">
+    
+    	<%= fullname %>
+
+    </div>
+
+</nav>
+
+<section id="main-body-container">
+	
+	<div id="sub-body-container">
+
+	</div>
+	
+</section>
+
+<script src="scripts/scripts.js"></script>
+
+</body>
+</html>
