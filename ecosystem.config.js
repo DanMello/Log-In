@@ -5,7 +5,7 @@ module.exports = {
       script    : 'index.js',
       env_production : {
         NODE_ENV: 'production',
-        MOBILE_HOST: 'm.dansapp.com'
+        MOBILE_HOST: '172.16.60.135:3000' // Here i would put the sub domain for mobile version
       }
     }
   ],

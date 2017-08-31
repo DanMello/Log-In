@@ -54,6 +54,8 @@ function emailAlreadyVerified (req, res, next) {
 
 }
 
+// So this function sets a path to render mobile html using the same routes based on the user agent "Mobile"
+
 function checkDevice (req, res, next) {
 
   if (req.headers.host === req.app.config.mobileHost) {
@@ -103,5 +105,3 @@ exports = module.exports = function(app, passport) {
     app.get('/', require('./views/pages/home').init)
 
 }
-
-//make a seperate login and signup route
