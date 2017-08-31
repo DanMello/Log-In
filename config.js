@@ -1,0 +1,1 @@
+exports.mobileHost = process.env.MOBILE_HOST || '10.0.0.189' // This is the mobile subdomain

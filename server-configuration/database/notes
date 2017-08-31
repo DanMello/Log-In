@@ -1,0 +1,68 @@
+Mysql
+
+##Allow remote access from specific host, in this case your webserver
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+	Edit this
+
+		bind-address            = 172.16.60.134  // Put ip of the database server not web server
+
+
+##Rename root user
+
+UPDATE mysql.user set user = 'mello' where user = 'root'; 
+
+flush privileges; 
+
+##Change password
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
+
+##listing users, and host
+
+SELECT User, Host  FROM mysql.user;
+
+##List user priviliges
+
+select * from information_schema.user_privileges;
+
+##Create user
+
+CREATE USER 'deploy'@'172.16.60.133' IDENTIFIED BY 'test';
+
+##Grant privileges
+
+Access to a specific database
+
+	GRANT ALL ON nodejs_database.* TO 'deploy'@'172.16.60.133';
+
+Access to everything super user
+
+	GRANT ALL PRIVILEGES ON *.* TO 'deploy'@'172.16.60.133';
+
+Then
+
+	flush privileges; 
+	sudo /etc/init.d/mysql restart
+
+##remove grants
+
+	DROP USER 'deploy'@'172.16.60.133';
+
+##Accessing from remote host
+
+	mysql -u deploy -pthepasswordhere -h 172.16.60.134
+
+
+CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, fullname VARCHAR(255), username VARCHAR(255), email VARCHAR(255), isVerified BOOLEAN NOT NULL DEFAULT 0, password VARCHAR(255), resetPasswordToken VARCHAR(255), resetPasswordExpires VARCHAR(255), oauth_provider VARCHAR(255), oauth_id VARCHAR(255));
+
+
+DROP TABLE tokens;
+DELETE FROM users;
+CREATE TABLE tokens (userid int NOT NULL, token VARCHAR(255), expires VARCHAR(255));
+ALTER TABLE tokens ADD CONSTRAINT fk_user_id FOREIGN KEY (userid) REFERENCES users (id);
+
+update users set isVerified=1 where username='dmello123';
+
+assign db instance into app so you can you use if off of the app instance for express 

@@ -1,5 +1,3 @@
 node_modules/
-server-configuration/
+server-configuration/ssh
 ssh/
-routes/jsonexample
-notes

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+</style>
+</head>
+<body>
+
+<h1>Please enter your email to resend your verification token</h1>
+
+<div><%= error %></div>
+
+<form action="/account/resendEmail" method='post'>
+
+  <input type="text" name="email">
+  <input type="submit" name="submit">
+
+</form>
+
+</body>
+</html>

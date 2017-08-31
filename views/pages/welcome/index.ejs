@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	box-sizing: border-box;
+	white-space: nowrap;
+}
+/*Header aka login*/
+#headerContainer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background: #C9C9C9;
+	height: 100px;
+}
+#mainHeading {
+	font-size: 38px;
+	color: white;
+	padding-right: 10px;
+}
+#loginForm {
+	display: flex;
+	position: relative;
+	padding-left: 10px;
+}
+.loginItems {
+	margin: 0px 10px 0px 10px;
+}
+.loginItems label {
+	font-size: 19px;
+	color: white;
+}
+.loginItems input {
+	padding: 5px 0px 5px 0px;
+}
+#loginButton {
+	width: 70px;
+	cursor: pointer;
+}
+#recoverAccount {
+	position: absolute;
+	right: 10px;
+	bottom: -25px;
+}
+#recoverAccount a {
+	color: white;
+	font-size: 15px;
+	text-decoration: none;
+	color: #3366FF;
+}
+#loginError {
+	position: absolute;
+	color: red;
+	right: 135px;
+	bottom: -25px;
+}
+/*Container for Summary and Sign up form*/
+#mainContainer {
+	display: flex;
+	justify-content: space-around;
+}
+/*Summary*/
+#subContainer {
+	display: flex;
+	justify-content: space-around;
+	width: 90%;
+}
+#summaryContainer {
+	padding: 0px 10px 0px 10px;	
+	margin-top: 20px;
+}
+#summaryHeading {
+	font-size: 35px;
+}
+#summaryList {
+	margin-top: 10px;
+	font-size: 25px;
+}
+#summaryList li {
+	margin: 15px 0px 15px 20px;
+}
+/*Sign up Form*/
+#registerContainer {
+	padding: 0px 10px 0px 10px;
+	margin-top: 20px;
+}
+#registerHeading {
+	font-size: 35px;
+}
+#summaryExplanation, #registerExplanation {
+	margin-top: 10px;
+	font-size: 20px;
+}
+#signupForm {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px
+}
+.signupItems {
+	display: flex;
+	justify-content: space-between;
+	margin: 4px 0px 4px 0px;
+	font-weight: bold;
+}
+.signupItems label {
+	font-size: 19px;
+}
+.signupItems input {
+	padding: 6px 3px 6px 3px;
+	width: 300px;
+    font-size: 18px;
+}
+#signupFormButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+#githubContainer {
+	margin-right: 20px;
+}
+#githubContainer a {
+	display: block;
+	text-decoration: none;
+	text-align: center;
+	background: #86af49;
+}
+#createAccountButtonContainer input {
+	background: #3366FF;
+}
+.signupButton {
+	border-radius: 5px;
+	color: white;
+	padding: 10px 10px 10px 10px;
+	font-size: 19px;
+	width: 200px;
+	border: 1px solid lightgrey;
+	cursor: pointer;
+}
+.errorText{
+	color: red;
+	align-self: flex-end;
+	font-size: 15px;
+}
+</style>
+</head>
+<body>
+
+<header id="headerContainer">
+
+	<%if (errors.loginErrors.length > 0) { %>
+
+		<% var loginErrors = errors.loginErrors %>
+
+		<% var username = body[0].username %>
+
+	<% } %>
+
+	<h1 id="mainHeading">Dans App</h1>
+
+	<form id="loginForm" action="/welcome/login" method="post">
+		<div class="loginItems">
+			<label>Username or Email:</label>
+			<input type="text" name="username" value="<%= username %>">
+		</div>
+		<div class="loginItems">
+			<label>Password:</label>
+			<input type="password" name="password">
+		</div>
+		<div class="loginItems">
+			<input id="loginButton" type="submit" value="Log In" name="Log In">
+		</div>
+		<div id="recoverAccount">
+			<a href="/#">Forgot account?</a>
+		</div>
+		<div id="loginError"><%= loginErrors %></div>
+	</form>
+
+</header>
+
+<section id="mainContainer">
+
+<div id="subContainer">
+
+	<div id="summaryContainer">
+
+		<h2 id="summaryHeading">Welcome to Dans App</h2>
+
+		<p id="summaryExplanation">Once logged in you'll be able to use the following features.</p>
+
+		<ul id="summaryList">
+			<li>Manage your profile.</li>
+			<li>Create your own posts for others to see.</li>
+			<li>View most recent posts from other users.</li>
+		</ul>
+
+	</div>
+
+	<div id="registerContainer">
+		
+		<h2 id="registerHeading">Register for an account</h2>
+
+		<p id="registerExplanation">Just fill out this simple form. (All fields required)</p>
+
+		<form id="signupForm" action="/welcome/signup" method="post">
+
+			<%if (errors.formErrors.length > 0) { %>
+
+				<% var fullnameError = errors.formErrors[0].fullname !== undefined ? errors.formErrors[0].fullname.msg : '' %>
+				<% var usernameError = errors.formErrors[0].userid !== undefined ? errors.formErrors[0].userid.msg : '' %>
+				<% var emailError = errors.formErrors[0].username !== undefined ? errors.formErrors[0].username.msg : '' %>
+				<% var passwordError = errors.formErrors[0].password !== undefined ? errors.formErrors[0].password.msg : '' %>
+
+				<% var fullnamePassed = body[0].fullname %>
+				<% var usernamePassed = body[0].userid %>
+				<% var emailPassed = body[0].username %>
+				<% var passwordPassed = body[0].password %>
+
+			<% } %>
+			
+			<div class="signupItems">
+				<label>Full Name:</label>
+				<input type="text" name="fullname" value="Dan Mello">
+			</div>
+			<div class="errorText"><%= fullnameError %></div>
+			<div class="signupItems">
+				<label>Username:</label>
+				<input type="text" name="userid" value="jdanmello">
+			</div>
+			<div class="errorText"><%= usernameError %></div>
+			<div class="signupItems">
+				<label>Email:</label>
+				<input type="text" name="username" value="jdanmello@gmail.com">
+			</div>
+			<div class="errorText"><%= emailError %></div>
+			<div class="signupItems">
+				<label>Password:</label>
+				<input type="password" name="password" value="neuza123">
+			</div>
+			<div class="errorText"><%= passwordError %></div>
+			<div id="signupFormButtons">
+				<div id="githubContainer">
+					<a class="signupButton" href="#">Login with Github</a>
+				</div>
+				<div id="createAccountButtonContainer">
+					<input class="signupButton" value="Create Account" type="submit" name="Log In">
+				</div>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>
+
+</section>
+
+</body>
+</html>
+
+
+<!-- 			<div class="signupItems">
+				<label>Full Name:</label>
+				<input type="text" name="fullname" value="<%= fullnamePassed %>">
+			</div>
+			<div class="errorText"><%= fullnameError %></div>
+			<div class="signupItems">
+				<label>Username:</label>
+				<input type="text" name="userid" value="<%= usernamePassed %>">
+			</div>
+			<div class="errorText"><%= usernameError %></div>
+			<div class="signupItems">
+				<label>Email:</label>
+				<input type="text" name="username" value="<%= emailPassed %>">
+			</div>
+			<div class="errorText"><%= emailError %></div>
+			<div class="signupItems">
+				<label>Password:</label>
+				<input type="password" name="password" value="<%= passwordPassed %>">
+			</div>
+			<div class="errorText"><%= passwordError %></div>
+			<div id="signupFormButtons">
+				<div id="githubContainer">
+					<a class="signupButton" href="#">Login with Github</a>
+				</div>
+				<div id="createAccountButtonContainer">
+					<input class="signupButton" value="Create Account" type="submit" name="Log In">
+				</div>
+			</div> -->
+<!-- 
+
+
+			<div class="signupItems">
+				<label>Full Name:</label>
+				<input type="text" name="fullname" value="Dan Mello">
+			</div>
+			<div class="errorText"><%= fullnameError %></div>
+			<div class="signupItems">
+				<label>Username:</label>
+				<input type="text" name="userid" value="jdanmello">
+			</div>
+			<div class="errorText"><%= usernameError %></div>
+			<div class="signupItems">
+				<label>Email:</label>
+				<input type="text" name="username" value="jdanmello@gmail.com">
+			</div>
+			<div class="errorText"><%= emailError %></div>
+			<div class="signupItems">
+				<label>Password:</label>
+				<input type="password" name="password" value="neuza123">
+			</div>
+			<div class="errorText"><%= passwordError %></div>
+			<div id="signupFormButtons">
+				<div id="githubContainer">
+					<a class="signupButton" href="#">Login with Github</a>
+				</div>
+				<div id="createAccountButtonContainer">
+					<input class="signupButton" value="Create Account" type="submit" name="Log In">
+				</div>
+			</div> -->

@@ -8,15 +8,21 @@ const flash = require('connect-flash')
 const favicon = require('serve-favicon')
 const session = require('express-session')
 const passport = require('passport')
+const nodemailer = require('nodemailer')
 
 //Start the app
 const app = express()
 
+//config for the app
+const config = require('./config')
+
+app.config = config
+
 //Database connection
 const knex = require("knex")
-const config = require("./knexfile")[process.env.NODE_ENV || "development"]
+const knexSetup = require("./knexfile")[process.env.NODE_ENV || "development"]
 
-app.db = knex(config)
+app.db = knex(knexSetup)
 
 //Files
 const staticAssets = __dirname + '/public'
@@ -39,9 +45,8 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-
 //setup passport
-require('./passport')(app, passport, bcrypt, crypto)
+require('./passport')(app, passport, bcrypt)
 
 //setup routes
 require('./routes')(app, passport, validators)

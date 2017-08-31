@@ -1,24 +1,14 @@
 module.exports = {
-  /**
-   * Application configuration section
-   * http://pm2.keymetrics.io/docs/usage/application-declaration/
-   */
   apps : [
-
-    // First application
     {
       name      : 'nodejs-app',
       script    : 'index.js',
       env_production : {
-        NODE_ENV: 'production' 
+        NODE_ENV: 'production',
+        MOBILE_HOST: 'm.dansapp.com'
       }
     }
   ],
-
-  /**
-   * Deployment section
-   * http://pm2.keymetrics.io/docs/usage/deployment/
-   */
   deploy : {
     production : {
       user : 'deploy',
@@ -29,4 +19,4 @@ module.exports = {
       'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v6.11.1/bin/pm2 reload ecosystem.config.js --env production'
     }
   }
-};
+}

@@ -2,6 +2,8 @@
 <html>
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
 
@@ -15,9 +17,10 @@
 
 	<% } %>
 
-	<h1 id="mainHeading">Dans App</h1>
+	<h1 id="mainHeading">Dans App Mobile</h1>
 
 	<form id="loginForm" action="/alternate/login" method="post">
+		<div id="loginError"><%= loginErrors %></div>
 		<div class="loginItems">
 			<label>Username or Email:</label>
 			<input type="text" name="username" value="<%= username %>">
@@ -32,7 +35,6 @@
 		<div id="recoverAccount">
 			<a href="/#">Forgot account?</a>
 		</div>
-		<div id="loginError"><%= loginErrors %></div>
 	</form>
 
 </div>
