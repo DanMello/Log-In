@@ -8,12 +8,12 @@ server {
 
   set $mobile_rewrite do_not_perform;
 
-  if ($http_user_agent ~* "Mobile") {
+  if ($http_user_agent ~ "Mobile") {
     set $mobile_rewrite perform;
   }
 
   if ($mobile_rewrite = perform) {
-    return 301 $scheme://10.0.0.189$request_uri;
+    rewrite ^/(.*) $scheme://10.0.0.189$request_uri redirect;
   }
 
   location / {

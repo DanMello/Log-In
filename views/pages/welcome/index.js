@@ -1,7 +1,5 @@
 exports.init = function (req, res) {
 
-  console.log(req.headers.host)
-
   if (req.filepath === '/mobile') {
 
     return res.redirect('/alternate/login')

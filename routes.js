@@ -99,6 +99,10 @@ exports = module.exports = function(app, passport) {
     app.get('/alternate/login', require('./views/pages/login').init)
     app.post('/alternate/login', require('./views/pages/login').login)
 
+    //signup only page
+    app.get('/alternate/signup', require('./views/pages/signup').init)
+    app.post('/alternate/signup', require('./views/pages/signup').signup)
+
     // Home page
     app.all('/', ensureAuthenticated)
     app.all('/', ensureVerified)
