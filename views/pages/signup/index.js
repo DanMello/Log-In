@@ -44,7 +44,7 @@ exports.signup = function (req, res, next) {
       req._passport.instance.authenticate('local-register', { 
         successRedirect: '/account/sendEmail',
         failureRedirect: redirectRoute
-      })(req, res)
+      })(req, res, next)
 
     }
 
