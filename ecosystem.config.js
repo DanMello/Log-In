@@ -5,14 +5,14 @@ module.exports = {
       script    : 'index.js',
       env_production : {
         NODE_ENV: 'production',
-        MOBILE_HOST: '172.16.60.135:3000' // Here i would put the sub domain for mobile version
+        MOBILE_HOST: '10.0.0.178:3000' // Here i would put the sub domain for mobile version
       }
     }
   ],
   deploy : {
     production : {
       user : 'deploy',
-      host : '172.16.60.133',
+      host : '10.0.0.168',
       ref  : 'origin/master',
       repo : 'https://github.com/DanMello/first-nodejs-project-login-page.git',
       path : '/home/deploy/web/nodejs-app',
