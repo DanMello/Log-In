@@ -14,7 +14,7 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	background: #3b5998;
+	background: lightgrey;
 	height: 100px;
 }
 #mainHeading {
@@ -224,22 +224,22 @@
 			
 			<div class="signupItems">
 				<label>Full Name:</label>
-				<input type="text" name="fullname" value="Dan Mello">
+				<input type="text" name="fullname" value="<%= fullnamePassed %>">
 			</div>
 			<div class="errorText"><%= fullnameError %></div>
 			<div class="signupItems">
 				<label>Username:</label>
-				<input type="text" name="userid" value="jdanmello">
+				<input type="text" name="userid" value="<%= usernamePassed %>">
 			</div>
 			<div class="errorText"><%= usernameError %></div>
 			<div class="signupItems">
 				<label>Email:</label>
-				<input type="text" name="username" value="jdanmello@gmail.com">
+				<input type="text" name="username" value="<%= emailPassed %>">
 			</div>
 			<div class="errorText"><%= emailError %></div>
 			<div class="signupItems">
 				<label>Password:</label>
-				<input type="password" name="password" value="neuza123">
+				<input type="password" name="password" value="<%= passwordPassed %>">
 			</div>
 			<div class="errorText"><%= passwordError %></div>
 			<div id="signupFormButtons">
