@@ -18,6 +18,8 @@ function ensureVerified (req, res, next) {
 
     accountNotVerifed.status = 400
 
+    accountNotVerifed.page = '/verified400'
+
     return next(accountNotVerifed)
 
   }
@@ -82,6 +84,9 @@ exports = module.exports = function(app, passport) {
     app.get('/welcome/login', require('./views/pages/welcome').init)
     app.post('/welcome/login', require('./views/pages/login').login)
     app.post('/welcome/signup', require('./views/pages/signup').signup)
+
+    //logout
+    app.get('/logout', require('./views/pages/login').logout)
 
     // Verification routes
     app.all('/account*', ensureAuthenticated)

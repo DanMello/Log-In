@@ -52,7 +52,7 @@ require('./passport')(app, passport, bcrypt)
 require('./routes')(app, passport, validators)
 
 //Error handler
-app.use(require('./views/pages/http/index').http500)
+app.use(require('./views/pages/http/index').errorHandler)
 
 //Utilities
 app.utility = {}

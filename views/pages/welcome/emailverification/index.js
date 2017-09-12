@@ -139,6 +139,8 @@ exports.verify = function(req, res, next) {
 
         expiredError.status = 400
 
+        expiredError.page = '/expiredtoken'
+
         return next(expiredError) 
 
       }

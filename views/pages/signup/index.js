@@ -1,6 +1,9 @@
 exports.init = function (req, res, next) {
 
-  res.render('pages/signup/index')
+  res.render('pages/signup' + req.filepath, {
+    formErrors: req.flash('formErrors'),
+    body: req.flash('body')
+  })
 
 }
 
@@ -41,7 +44,7 @@ exports.signup = function (req, res, next) {
 
     } else {
 
-      req._passport.instance.authenticate('local-register', { 
+      req._passport.instance.authenticate('local-register', {
         successRedirect: '/account/sendEmail',
         failureRedirect: redirectRoute
       })(req, res, next)

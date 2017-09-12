@@ -1,1 +1,2 @@
-exports.mobileHost = process.env.MOBILE_HOST || '10.0.0.189' // This is the mobile subdomain
+// This is the mobile subdomain, and for local host you can use the ip of your host computer, or username.local, in the mobile safari web browser
+exports.mobileHost = process.env.MOBILE_HOST || '10.0.0.189' 

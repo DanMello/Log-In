@@ -12,7 +12,7 @@ module.exports = {
   deploy : {
     production : {
       user : 'deploy',
-      host : '10.0.0.168',
+      host : '10.0.0.169', //Host is the web server
       ref  : 'origin/master',
       repo : 'https://github.com/DanMello/first-nodejs-project-login-page.git',
       path : '/home/deploy/web/nodejs-app',

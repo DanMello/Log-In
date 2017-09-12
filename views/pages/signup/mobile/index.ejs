@@ -19,37 +19,26 @@
 	align-items: center;
 }
 
-#mainHeadingContainer {
-	background: #3b5998;
-	width: 100%;
-	text-align: center;
-	padding: 25px
-}
-
-#mainHeading {
-	color: white;
-}
-
-#loginForm {
+#signupForm {
 	width: 90%;
 	margin-top: 20px;
 }
 
-.loginItems {
+.signupItems {
 	display: flex;
 	flex-direction: column;
 }
 
-.loginItems label {
+.signupItems label {
 	font-size: 20px;
 }
 
-.loginItems input {
+.signupItems input {
     font-size: 19px;
     padding: 5px 5px 5px 5px;
 }
 
-.button {
+.button { 
     margin-top: 18px;
 }
 
@@ -60,20 +49,54 @@
 	color: white;
 }
 
+#orContainer {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+#or {
+	font-size: 21px;
+}
+
+#orContainer hr {
+	width: 40%;
+}
+
+#githubContainer {
+	background: #86af49;
+	height: 40px;
+	margin-top: 20px;
+	text-align: center;
+	border-radius: 5px;
+	border-top:			1px solid #3f3b3b;
+	border-left:		1px solid #3c3f3b;
+	border-right:		1px solid #3c3f3b;
+	border-bottom:		1px solid #3c3b3f;
+}
+
+#githubContainer a {
+	color: white;
+	display: block;
+	font-size: 19px;
+	text-decoration: none;
+	line-height: 40px;
+}
+
 #helpLinks {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	margin: 18px 0px 18px 0px;
 }
 
-#recoverAccount {
-	margin-top: 18px;
+#recoverAccount, #createAccount {
 	font-size: 20px;
 }
 
-#loginError { 
+.errorText {
 	color: red;
-	font-size: 19px;
 }
 
 </style>
@@ -82,40 +105,61 @@
 
 <div id="mainContainer">
 
-	<%if (loginErrors.length > 0) { %>
+	<% include ../../../partials/mobile/header %>
 
-		<% var loginErrors = loginErrors %>
+	<%if (formErrors.length > 0) { %>
 
-		<% var username = body[0].username %>
+		<% var fullnameError = formErrors[0].fullname !== undefined ? formErrors[0].fullname.msg : '' %>
+		<% var usernameError = formErrors[0].userid !== undefined ? formErrors[0].userid.msg : '' %>
+		<% var emailError = formErrors[0].username !== undefined ? formErrors[0].username.msg : '' %>
+		<% var passwordError = formErrors[0].password !== undefined ? formErrors[0].password.msg : '' %>
+
+		<% var fullnamePassed = body[0].fullname %>
+		<% var usernamePassed = body[0].userid %>
+		<% var emailPassed = body[0].username %>
+		<% var passwordPassed = body[0].password %>
 
 	<% } %>
 
-	<div id="mainHeadingContainer">
-		
-		<h1 id="mainHeading">Dans App Mobile</h1>
-		
-	</div>
+	<form id="signupForm" action="/alternate/signup" method="post">
 
-	<form id="loginForm" action="/alternate/login" method="post">
-
-		<div id="loginError"><%= loginErrors %></div>
-		<div class="loginItems">
-			<label>Username or Email:</label>
-			<input type="text" name="username" value="<%= username %>">
+		<div class="signupItems">
+			<label>Full Name:</label>
+			<input type="text" name="fullname" value="<%= fullnamePassed %>">
 		</div>
-		<div class="loginItems">
+		<div class="errorText"><%= fullnameError %></div>
+		<div class="signupItems">
+			<label>Username:</label>
+			<input type="text" name="userid" value="<%= usernamePassed %>">
+		</div>
+		<div class="errorText"><%= usernameError %></div>
+		<div class="signupItems">
+			<label>Email:</label>
+			<input type="text" name="username" value="<%= emailPassed %>">
+		</div>
+		<div class="errorText"><%= emailError %></div>
+		<div class="signupItems">
 			<label>Password:</label>
-			<input type="password" name="password">
+			<input type="password" name="password" value="<%= passwordPassed %>">
 		</div>
-		<div class="loginItems button">
-			<input id="loginButton" type="submit" value="Log In" name="Log In">
+		<div class="errorText"><%= passwordError %></div>
+		<div class="signupItems button">
+			<input id="signupButton" value="Create Account" type="submit" name="Log In">
+		</div>
+		<div id="orContainer">
+			<hr>
+				<span id="or">or</span>
+			<hr>
+		</div>
+		<div id="githubContainer">
+			<a id="githubButton" href="#">Login with Github</a>
 		</div>
 		<div id="helpLinks">
 			<div id="recoverAccount">
-				<a href="/#">Forgot account?</a>
+				<a href="/#">Have an account?</a>
 			</div>
-			<div id="recoverAccount">
-				<a href="/">Create an account</a>
+			<div id="createAccount">
+				<a href="/alternate/signup">Forgot account?</a>
 			</div>
 		</div>
 
@@ -125,3 +169,7 @@
 
 </body>
 </html>
+
+
+
+

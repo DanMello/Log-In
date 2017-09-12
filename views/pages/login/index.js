@@ -1,7 +1,5 @@
 exports.init = function (req, res) {
 
-  console.log(req.route.path)
-
   res.render('pages/login' + req.filepath, {
     loginErrors: req.flash('loginErrors'),
     body: req.flash('body')
@@ -33,6 +31,15 @@ exports.login = function (req, res, next) {
 
     }
 
+  })
+
+}
+
+exports.logout = function(req, res) {
+
+  req.session.destroy(function (err) {
+    if (err) throw err
+    res.redirect('/')
   })
 
 }
