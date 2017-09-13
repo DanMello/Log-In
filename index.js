@@ -8,19 +8,20 @@ const flash = require('connect-flash')
 const favicon = require('serve-favicon')
 const session = require('express-session')
 const passport = require('passport')
-const nodemailer = require('nodemailer')
 
 //Start the app
 const app = express()
 
-//config for the app
-const config = require('./config')
+//config for the app, env variables
+require('dotenv').config()
 
-app.config = config
+const Config = require('./config')
+
+app.config = Config
 
 //Database connection
 const knex = require("knex")
-const knexSetup = require("./knexfile")[process.env.NODE_ENV || "development"]
+const knexSetup = Config.get(Config.enviroment)['database']
 
 app.db = knex(knexSetup)
 

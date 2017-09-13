@@ -3,10 +3,6 @@ module.exports = {
     {
       name      : 'nodejs-app',
       script    : 'index.js',
-      env_production : {
-        NODE_ENV: 'production',
-        MOBILE_HOST: '10.0.0.178:3000' // Here i would put the sub domain for mobile version
-      }
     }
   ],
   deploy : {

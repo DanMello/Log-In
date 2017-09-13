@@ -29,7 +29,7 @@ select * from information_schema.user_privileges;
 
 ##Create user
 
-CREATE USER 'deploy'@'10.0.0.168' IDENTIFIED BY 'test';
+CREATE USER 'deploy'@'10.0.0.169' IDENTIFIED BY 'Mysecurepassword2!';
 
 ##Grant privileges
 

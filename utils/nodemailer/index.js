@@ -1,17 +1,11 @@
 
 exports = module.exports = function(next, options) {
   
+  const Config = require('../../config')
+  
   const nodemailer = require('nodemailer')
 
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: 'jdanmello@gmail.com',
-      pass: 'Mello321'
-    }
-  })
+  let transporter = nodemailer.createTransport(Config.get('default')['nodemailer'])
 
   let emailMessage = {
     from: options.from,

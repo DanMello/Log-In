@@ -60,7 +60,9 @@ function emailAlreadyVerified (req, res, next) {
 
 function checkDevice (req, res, next) {
 
-  if (req.headers.host === req.app.config.mobileHost) {
+  let url = req.app.config.get(req.app.config.enviroment)['mobileurl']
+
+  if (req.headers.host === url) {
 
     req.filepath = '/mobile'
 
