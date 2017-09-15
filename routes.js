@@ -20,6 +20,11 @@ function ensureVerified (req, res, next) {
 
     accountNotVerifed.page = '/verified400'
 
+    accountNotVerifed.object = {
+      message: accountNotVerifed.message,
+      account: req.user.email
+    }
+
     return next(accountNotVerifed)
 
   }
@@ -100,6 +105,10 @@ exports = module.exports = function(app, passport) {
     
     //Not in account route incase user checks email from another browser
     app.get('/verification/:token', require('./views/pages/welcome/emailverification').verify)
+
+    //Forgot account?
+    app.get('/forgot', require('./views/pages/forgot').init)
+    app.post('/forgot', require('./views/pages/forgot').forgotAccount)
 
     //login only page
     app.all('/alternate*', ensureSignedOut)

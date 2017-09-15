@@ -31,7 +31,7 @@ exports = module.exports = function(app, passport, bcrypt) {
     
     let newUser = {
       fullname: req.body.fullname,
-      username: req.body.userid,
+      username: req.body.userid.toLowerCase(),
       email: email.toLowerCase(),
       password: bcrypt.hashSync(password)
     }

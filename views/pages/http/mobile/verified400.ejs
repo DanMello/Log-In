@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+* {
+	font-family: sans-serif;
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#mainContainer {
+	display: flex;
+	justify-content: center;
+}
+
+#subContainer {
+	width: 90%;
+}
+
+#subContainer h1 {
+	margin-top: 10px;
+	font-size: 40px;
+}
+
+#Error {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#errorMessage {
+	font-size: 18px;
+	color: red
+
+}
+
+#subContainer p {
+	margin-top: 10px;
+	font-size: 18px;
+}
+
+#email {
+	text-decoration: underline;
+	color: blue;
+}
+
+</style>
+</head>
+<body>
+
+<% include ../../../partials/mobile/header %>
+
+<div id="mainContainer">
+
+    <div id="subContainer">
+    	
+		<h1>Error Page</h1>
+
+		<span id="Error">Error:</span>
+
+		<span id="errorMessage"><%= message %></span>
+
+		<p>This means that your account <span id="email"><%= account %></span>, has already been created. If this is not your account you can log out here: <a href="/logout">Log Out</a></p>
+
+		<p>If this is your account you will need to check your email and verify your account by clicking the link in your email to log in. If your token has expired you can request a new one here: <a href="/account/resendEmail">Resend email</a></p>
+		
+    </div>
+	
+</div>
+
+</body>
+</html>

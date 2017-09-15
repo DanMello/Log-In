@@ -28,7 +28,7 @@ app.db = knex(knexSetup)
 //Files
 const staticAssets = __dirname + '/public'
 const faviconPath = __dirname + '/public/favicon.ico'
-const validators = require('./authenticationModule')
+const validators = require('./customValidators')
 
 //App settings
 app.set('view engine', 'ejs')
@@ -37,11 +37,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(staticAssets))
 app.use(favicon(faviconPath))
 app.use(expressValidator({ customValidators: validators }))
-app.use(session({
-    secret: "secret phrase",
-    resave: false,
-    saveUninitialized: false
-}))
+app.use(session(Config.get('default')['session']))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -50,7 +46,7 @@ app.use(passport.session())
 require('./passport')(app, passport, bcrypt)
 
 //setup routes
-require('./routes')(app, passport, validators)
+require('./routes')(app, passport)
 
 //Error handler
 app.use(require('./views/pages/http/index').errorHandler)

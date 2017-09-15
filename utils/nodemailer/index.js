@@ -2,7 +2,6 @@
 exports = module.exports = function(next, options) {
   
   const Config = require('../../config')
-  
   const nodemailer = require('nodemailer')
 
   let transporter = nodemailer.createTransport(Config.get('default')['nodemailer'])

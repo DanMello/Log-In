@@ -1,7 +1,5 @@
 exports.init = function (req, res) {
-
-  console.log("Host is: " + req.headers.host)
-
+  
   res.render('pages/login' + req.filepath, {
     loginErrors: req.flash('loginErrors'),
     body: req.flash('body')

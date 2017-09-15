@@ -8,6 +8,7 @@ function sendEmail(req, res, next, type) {
     expires: Date.now() + 86400000
   }
 
+
   return req.app.db('tokens')
     .where('userid', req.user.id)
     .first()
@@ -24,6 +25,8 @@ function sendEmail(req, res, next, type) {
       }
 
       if (token && token.expires > Date.now()) {
+
+        console.log('hello')
 
         let tokenNotExpiredError = new Error("Your token has not yet expired, please check your email")
 
@@ -42,6 +45,7 @@ function sendEmail(req, res, next, type) {
       }
 
     }).then(() => {
+
 
       return req.app.db('tokens')
       .insert(emailToken)
@@ -68,6 +72,8 @@ exports.init = function(req, res) {
 }
 
 exports.sendVerificationEmail = function(req, res, next) {
+
+  console.log('rann')
 
   sendEmail(req, res, next, 'send').then(() => {
     
