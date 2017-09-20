@@ -188,11 +188,13 @@ exports.resetPassword = function (req, res, next) {
 
       if (!result.isEmpty()) {
 
-        let errors = result.array()[0]
+        let errorMessage = result.array()[0].msg
 
-        req.flash('formErrors', errors.msg)
-        req.flash('body', req.body)
-        res.redirect(req.url)
+        let passwordError = new Error(errorMessage)
+
+        passwordError.redirect = true
+
+        throw passwordError
 
       }
 
@@ -211,7 +213,7 @@ exports.resetPassword = function (req, res, next) {
 
         let passwordError =  new Error('Something went wrong trying to change password please try again')
 
-        passwordError.status = 404
+        passwordError.status = 500
 
         throw passwordError
 
@@ -236,7 +238,18 @@ exports.resetPassword = function (req, res, next) {
 
     }).catch(err => {
 
-      next(err)
+      if (err.redirect) {
+
+        req.flash('formErrors', err.message)
+        req.flash('body', req.body)
+       
+        res.redirect(req.url)
+
+      } else {
+
+        next(err)
+
+      }
 
     })
 
