@@ -11,9 +11,9 @@
 
 <div><%= error %></div>
 
-<form action="/account/resendEmail" method='post'>
+<form action="/resendEmail" method='post'>
 
-  <input type="text" name="email">
+  <input type="text" name="email" value="<%= body.email %>">
   <input type="submit" name="submit">
 
 </form>

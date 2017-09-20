@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+* {
+  font-family: sans-serif;
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#secondaryContainer {
+  width: 90%;
+}
+
+#heading {
+  margin-top: 10px;
+}
+
+#forgotAccountText {
+    margin-top: 10px;
+    font-size: 19px;
+}
+
+</style>
+</head>
+<body>
+
+<% include ../../../partials/mobile/header %>
+
+<div id="mainContainer">
+
+  <div id="secondaryContainer">
+
+    <h1 id="heading">Almost there!</h1>
+    
+    <div id="forgotAccountText">An email has been sent to with instructions on how to reset your password</div>
+    
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -43,10 +43,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //setup passport
-require('./passport')(app, passport, bcrypt)
+require('./passport')(app, passport)
 
 //setup routes
 require('./routes')(app, passport)
+
+//adding bcrypt to the app object so i can use it in create user and reset functions
+app.bcrypt = bcrypt
 
 //Error handler
 app.use(require('./views/pages/http/index').errorHandler)

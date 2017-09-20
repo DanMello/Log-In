@@ -16,10 +16,10 @@ exports.errorHandler = function(err, req, res, next) {
   	let page = err.page || '/defaultError'
     let errorObject = err.object
 
-  	res.render('pages/http' + req.filepath + page, errorObject || { message: err.message })
+    res.render('pages/http' + req.filepath + page, errorObject || { message: err.message, error: err.stack })
     
   } else {
-
+    
     res.render('pages/http' + req.filepath + '/defaultError', {
         message: err.message,
         error: err.stack

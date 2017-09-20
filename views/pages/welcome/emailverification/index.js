@@ -1,16 +1,15 @@
-function sendEmail(req, res, next, type) {
+function sendEmail(req, user, type) {
 
   let crypto = require('crypto')
-  
+
   let emailToken = {
-    userid: req.user.id,
+    userid: user.id,
     token: crypto.randomBytes(16).toString('hex'),
     expires: Date.now() + 86400000
   }
 
-
   return req.app.db('tokens')
-    .where('userid', req.user.id)
+    .where('userid', user.id)
     .first()
     .then(token => {
 
@@ -26,8 +25,6 @@ function sendEmail(req, res, next, type) {
 
       if (token && token.expires > Date.now()) {
 
-        console.log('hello')
-
         let tokenNotExpiredError = new Error("Your token has not yet expired, please check your email")
 
         tokenNotExpiredError.status = 400
@@ -39,24 +36,27 @@ function sendEmail(req, res, next, type) {
       if ((token && token.expires < Date.now()) && (type === 'resend')) {
 
         return req.app.db('tokens')
-          .where('userid', req.user.id)
+          .where('userid', user.id)
           .del()
 
       }
 
     }).then(() => {
 
-
       return req.app.db('tokens')
       .insert(emailToken)
 
     }).then(() => {
 
-      req.app.utility.nodemailer(next, {
+      let emailMessage = 
+        `Hello, please verify your account by clicking the link\n\n
+         ${req.protocol}://${req.headers.host}/verification/${emailToken.token}\n\n
+        `
+      return req.app.utility.nodemailer({
         from: '"Dans App" <jdanmello@gmail.com>',
-        to: req.user.email,
+        to: user.email,
         subject: 'Account verification from Dans App',
-        message: 'Hello, please verify your account by clicking the link: ' + req.protocol + '://' + req.headers.host + '\/verification\/' + emailToken.token + '.\n' 
+        message: emailMessage
       })
 
     })
@@ -66,16 +66,15 @@ function sendEmail(req, res, next, type) {
 exports.init = function(req, res) {
 
   res.render('pages/welcome/emailverification/resendEmail', {
-    error: req.flash('emailError')
+    error: req.flash('emailError'),
+    body: req.flash('body')
   })
 
 }
 
 exports.sendVerificationEmail = function(req, res, next) {
 
-  console.log('rann')
-
-  sendEmail(req, res, next, 'send').then(() => {
+  sendEmail(req, req.user, 'send').then(() => {
     
     res.redirect('/account/postlogin')
 
@@ -100,19 +99,46 @@ exports.resendVerificationEmail = function(req, res, next) {
 
       req.flash('emailError', error)
       req.flash('body', req.body)
-      res.redirect('/account/resendEmail')
+      res.redirect('/resendEmail')
 
     } else {
 
-      sendEmail(req, res, next, 'resend').then(() => {
+      return req.app.db('users')
+        .where('email', req.body.email)
+        .first()
+        .then(user => {
 
-        res.redirect('/account/postlogin')
+          if (!user) {
 
-      }).catch(err => {
+            let userNotfound = new Error('There is no account with that email*')
 
-        next(err)
+            userNotfound.status = 404
 
-      })
+            throw userNotfound
+
+          }
+
+          return sendEmail(req, user, 'resend')
+
+        }).then(() => {
+
+          res.redirect('/account/postlogin')
+
+        }).catch(err => {
+
+          if (err.status === 404) {
+
+            req.flash('emailError', err.message)
+            req.flash('body', req.body)
+            res.redirect(req.filepath)
+
+          } else {
+
+            return next(err)
+
+          }
+
+        })
 
     }
 
@@ -135,7 +161,7 @@ exports.verify = function(req, res, next) {
 
         tokenNotFoundError.status = 400
 
-        return next(tokenNotFoundError)   
+        throw tokenNotFoundError
 
       }
 
@@ -147,7 +173,7 @@ exports.verify = function(req, res, next) {
 
         expiredError.page = '/expiredtoken'
 
-        return next(expiredError) 
+        throw expiredError
 
       }
 
@@ -176,7 +202,9 @@ exports.verify = function(req, res, next) {
 
       if (!verifiedUser) {
 
-        return next(new Error('Unable to verify email please try again'))
+        unableToVerifyError = new Error('Unable to verify email please try again')
+
+        throw unableToVerifyError
 
       }
 

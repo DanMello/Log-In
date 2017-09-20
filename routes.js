@@ -100,15 +100,19 @@ exports = module.exports = function(app, passport) {
     app.all('/account*', emailAlreadyVerified)
     app.get('/account/postlogin', require('./views/pages/welcome').postLogin)
     app.get('/account/sendEmail', require('./views/pages/welcome/emailverification').sendVerificationEmail)
-    app.get('/account/resendEmail', require('./views/pages/welcome/emailverification').init)
-    app.post('/account/resendEmail', require('./views/pages/welcome/emailverification').resendVerificationEmail)
     
     //Not in account route incase user checks email from another browser
     app.get('/verification/:token', require('./views/pages/welcome/emailverification').verify)
 
+    //Also not in account route incase user forgets account before he verifies email lol
+    app.get('/resendEmail', require('./views/pages/welcome/emailverification').init)
+    app.post('/resendEmail', require('./views/pages/welcome/emailverification').resendVerificationEmail)
+
     //Forgot account?
     app.get('/forgot', require('./views/pages/forgot').init)
+    app.get('/forgot/:token', require('./views/pages/forgot').verify)
     app.post('/forgot', require('./views/pages/forgot').forgotAccount)
+    app.post('/forgot/:token', require('./views/pages/forgot').resetPassword)
 
     //login only page
     app.all('/alternate*', ensureSignedOut)

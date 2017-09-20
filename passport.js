@@ -1,4 +1,4 @@
-exports = module.exports = function(app, passport, bcrypt) {
+exports = module.exports = function(app, passport) {
 
   const LocalStrategy = require('passport-local').Strategy
 
@@ -13,7 +13,7 @@ exports = module.exports = function(app, passport, bcrypt) {
       .first()
       .then(user => {
 
-        if (!user || !bcrypt.compareSync(password, user.password)) {
+        if (!user || !app.bcrypt.compareSync(password, user.password)) {
 
           req.flash('body', req.body)
 
@@ -33,7 +33,7 @@ exports = module.exports = function(app, passport, bcrypt) {
       fullname: req.body.fullname,
       username: req.body.userid.toLowerCase(),
       email: email.toLowerCase(),
-      password: bcrypt.hashSync(password)
+      password: app.bcrypt.hashSync(password)
     }
 
     app.db('users')

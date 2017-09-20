@@ -48,6 +48,10 @@
     padding: 5px 5px 5px 5px;
 }
 
+.repeat {
+  margin-top: 10px;
+}
+
 .button {
     margin-top: 18px;
 }
@@ -71,34 +75,40 @@
 
 <% include ../../../partials/mobile/header %>
 
+<%if (passwordErrors.length > 0) { %>
+
+  <% var passwordErrors = passwordErrors %>
+
+  <% var password = body[0].password %>
+
+  <% var password2 = body[0].password2 %>
+
+<% } %>
+
 <div id="mainContainer">
-
-  <%if (formErrors.length > 0) { %>
-
-    <% var formErrors = formErrors %>
-
-    <% var email = body[0].email %>
-
-  <% } %>
 
   <div id="forgotAccountText">
 
-    <h1>Forgot Account?</h1>
+    <h1>Reset Password</h1>
 
-    <p>Don't worry, just type in your email and we'll send you reset instructions.</p>
+    <p>Enter a new password for your account, remember password must contain 6 to 20 characters.</p>
 
-    <div id="errorText"><%= formErrors %></div>
+    <div id="errorText"><%= passwordErrors %></div>
 
   </div>
 
-  <form id="forgotForm" action="/forgot" method="post">
+  <form id="forgotForm" action="/forgot/<%= token %>" method="post">
 
     <div class="formItems">
-      <label>Enter your email:</label>
-      <input type="text" name="email" value="<%= email %>">
+      <label>Password:</label>
+      <input type="password" name="password" value="<%= password %>">
+    </div>
+    <div class="formItems repeat">
+      <label>Repeat Password:</label>
+      <input type="password" name="password2" value="<%= password2 %>">
     </div>
     <div class="formItems button">
-      <input type="submit" value="Send email">
+      <input type="submit" value="Reset password">
     </div>
 
   </form>

@@ -1,5 +1,5 @@
 
-exports = module.exports = function(next, options) {
+exports = module.exports = function(options) {
   
   const Config = require('../../config')
   const nodemailer = require('nodemailer')
@@ -13,9 +13,21 @@ exports = module.exports = function(next, options) {
     html: options.message
   }
 
-  transporter.sendMail(emailMessage, (err, info) => {
+  return new Promise(function(resolve, reject) {
 
-  	if (err) throw err
+    transporter.sendMail(emailMessage, (err, info) => {
+
+      if (err) {
+      
+        reject(err)
+
+      } else {
+
+        resolve()
+
+      }
+
+    })
 
   })
 

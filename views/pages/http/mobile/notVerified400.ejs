@@ -58,15 +58,15 @@
 
     <div id="subContainer">
     	
-		<h1>Hey there</h1>
+		<h1>Error Page</h1>
 
-		<span id="Error">Note:</span>
+		<span id="Error">Error:</span>
 
 		<span id="errorMessage"><%= message %></span>
 
-		<p>This means that your account <span id="email"><%= account %></span>, has already been created. If this is not your account you can log out here: <a href="/logout">Log Out</a></p>
+		<p>The email <span id="email"><%= account %></span> needs to be verified before you can log in or reset your password.
 
-		<p>If this is your account you will need to check your email and verify your account by clicking the link in your email to log in. If your token has expired you can request a new one here: <a href="/resendEmail">Resend email</a></p>
+		<p>If your token has expired you can request a new one here: <a href="/resendEmail">Resend email</a></p>
 		
     </div>
 	

@@ -35,11 +35,13 @@ exports.login = function (req, res, next) {
 
 }
 
-exports.logout = function(req, res) {
+exports.logout = function(req, res, next) {
 
   req.session.destroy(function (err) {
-    if (err) throw err
-    res.redirect('/')
+
+    if (err) next(err) 
+    else res.redirect('/')
+
   })
 
 }
