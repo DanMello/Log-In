@@ -19,6 +19,6 @@ exports.init = function (req, res) {
 
 exports.postLogin = function(req, res) {
 
-  res.render('pages/welcome/postlogin')
+  res.render('pages/welcome' + req.filepath + '/postlogin')
 
 }

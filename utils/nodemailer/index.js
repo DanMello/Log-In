@@ -18,7 +18,7 @@ exports = module.exports = function(options) {
     transporter.sendMail(emailMessage, (err, info) => {
 
       if (err) {
-      
+
         reject(err)
 
       } else {

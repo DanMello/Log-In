@@ -1,12 +1,13 @@
 exports = module.exports = function(app, passport) {
 
   const LocalStrategy = require('passport-local').Strategy
+  const GitHubStrategy = require('passport-github2').Strategy
 
-  passport.use(new LocalStrategy({passReqToCallback: true}, authenticate))
-  passport.use("local-register", new LocalStrategy({passReqToCallback: true}, register))
-
-  function authenticate(req, username, password, done) {
-
+  passport.use(new LocalStrategy({
+    passReqToCallback: true
+  },
+  function (req, username, password, done) {
+    
     app.db('users')
       .where('email', username)
       .orWhere('username', username)
@@ -23,12 +24,15 @@ exports = module.exports = function(app, passport) {
 
         done(null, user)
 
-    }, done)
-    
-  }
+      }, done)
 
-  function register(req, email, password, done) {
-    
+  }))
+
+  passport.use("local-register", new LocalStrategy({
+    passReqToCallback: true
+  },
+  function (req, email, password, done) {
+
     let newUser = {
       fullname: req.body.fullname,
       username: req.body.userid.toLowerCase(),
@@ -106,13 +110,48 @@ exports = module.exports = function(app, passport) {
 
       })
 
-  }
+  }))
+  
+  passport.use(new GitHubStrategy({
+    clientID: 'a4d6061451f9d35c0fb8',
+    clientSecret: 'b7853f009997e81d1899bbd7b6bac9dd302e820b',
+    callbackURL: '/signup/github/callback/'
+  },
+  function(accessToken, refreshToken, profile, done) {
+
+    app.db('users')
+      .where('oauth_provider', 'github')
+      .where('oauth_id', profile.username)
+      .first()
+      .then(user => {
+        
+        if (user) {
+
+          return done(null, user)
+        }
+
+        const newUser = {
+          oauth_provider: 'github',
+          oauth_id: profile.username
+        }
+
+        app.db('users')
+          .insert(newUser)
+          .then(id => {
+            newUser.id = id[0]
+            return done(null, newUser)
+          })
+
+      })
+
+  }))
 
   passport.serializeUser(function(user, done) {
     done(null, user.id)
   })
 
   passport.deserializeUser(function(id, done) {
+
     app.db('users')
       .where('id', id)
       .first()

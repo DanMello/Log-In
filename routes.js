@@ -1,10 +1,14 @@
 function ensureAuthenticated (req, res, next) {
 
+  console.log(req.isAuthenticated())
+
   if (req.isAuthenticated()) {
 
     return next()
 
   }
+
+  console.log('rann')
 
   return res.redirect('/welcome/login')
 
@@ -12,7 +16,9 @@ function ensureAuthenticated (req, res, next) {
 
 function ensureVerified (req, res, next) {
 
-  if (!req.user.isVerified) {
+  if (!req.user.isVerified && req.user.oauth_provider === null) {
+
+    console.log('rann')
 
     let accountNotVerifed = new Error("Your account is not verified please check your email")
 
@@ -98,7 +104,6 @@ exports = module.exports = function(app, passport) {
     // Verification routes
     app.all('/account*', ensureAuthenticated)
     app.all('/account*', emailAlreadyVerified)
-    app.get('/account/postlogin', require('./views/pages/welcome').postLogin)
     app.get('/account/sendEmail', require('./views/pages/welcome/emailverification').sendVerificationEmail)
     
     //Not in account route incase user checks email from another browser
@@ -122,6 +127,10 @@ exports = module.exports = function(app, passport) {
     //signup only page
     app.get('/alternate/signup', require('./views/pages/signup').init)
     app.post('/alternate/signup', require('./views/pages/signup').signup)
+
+    //social signup
+    app.get('/signup/github/', passport.authenticate('github', { scope: ['user:email'] }))
+    app.get('/signup/github/callback/', require('./views/pages/signup/index').signupGitHub)
 
     // Home page
     app.all('/', ensureAuthenticated)

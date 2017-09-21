@@ -104,6 +104,8 @@
 </head>
 <body>
 
+<div id="loading"></div>
+
 <div id="mainContainer">
 
 	<%if (loginErrors.length > 0) { %>
@@ -115,6 +117,7 @@
 	<% } %>
 
 	<% include ../../../partials/mobile/header %>
+
 	
 	<form id="loginForm" action="/alternate/login" method="post">
 
@@ -136,7 +139,7 @@
 			<hr>
 		</div>
 		<div id="githubContainer">
-			<a class="signupButton" href="#">Login with Github</a>
+			<a class="signupButton" href="/signup/github">Login with Github</a>
 		</div>
 		<div id="helpLinks">
 			<div id="recoverAccount">

@@ -54,3 +54,14 @@ exports.signup = function (req, res, next) {
   })
   
 }
+
+exports.signupGitHub = function (req, res, next) {
+
+  req._passport.instance.authenticate('github', { 
+
+    failureRedirect: '/alternate/login',
+    successRedirect: '/' 
+
+  })(req, res, next)
+
+}

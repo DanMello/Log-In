@@ -65,7 +65,7 @@ function sendEmail(req, user, type) {
 
 exports.init = function(req, res) {
 
-  res.render('pages/welcome/emailverification/resendEmail', {
+  res.render('pages/welcome/emailverification' + req.filepath + '/resendEmail', {
     error: req.flash('emailError'),
     body: req.flash('body')
   })
@@ -76,7 +76,7 @@ exports.sendVerificationEmail = function(req, res, next) {
 
   sendEmail(req, req.user, 'send').then(() => {
     
-    res.redirect('/account/postlogin')
+    res.render('pages/welcome' + req.filepath + '/postlogin')
 
   }).catch(err => {
 
@@ -122,7 +122,7 @@ exports.resendVerificationEmail = function(req, res, next) {
 
         }).then(() => {
 
-          res.redirect('/account/postlogin')
+          res.render('pages/welcome' + req.filepath + '/postlogin')
 
         }).catch(err => {
 
@@ -214,7 +214,7 @@ exports.verify = function(req, res, next) {
 
     }).then(() => {
 
-      res.render('pages/welcome/emailverification/verify', {
+      res.render('pages/welcome/emailverification' + req.filepath + '/verify', {
         email: user.email
       })
 
