@@ -32,6 +32,10 @@
 	display: block;
 	margin-top: 10px;
 }
+#email {
+  font-style: italic;
+  color: blue;
+}
 
 </style>
 </head>
@@ -43,7 +47,7 @@
 
 	<div id="subContainer">
 
-		<p>Thank you, your email jdanmello@gmail.com is now verified</p>
+		<p>Thank you, your email <span id="email"><%= email %></span> is now verified</p>
 
 		<a href="/alternate/login">Click here to log in</a>
 

@@ -1,5 +1,5 @@
 {
-  "name": "first-nodejs-project",
+  "name": "Log-In",
   "version": "1.0.0",
   "description": "Creating a log-in page with express, mysql, redis, and passport.js",
   "main": "index.js",
@@ -36,8 +36,6 @@
     "serve-favicon": "^2.4.3"
   },
   "devDependencies": {
-    "chai": "^4.1.1",
-    "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
     "pm2": "^2.6.1"
   }

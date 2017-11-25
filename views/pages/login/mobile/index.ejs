@@ -116,7 +116,7 @@
 
 	<% } %>
 	
-	<form id="loginForm" action="/alternate/login" method="post">
+	<form id="loginForm" action="/alternate/login" method="post" onsubmit="return formSubmit.disable(this)">
 
 		<div id="loginError"><%= loginErrors %></div>
 		<div class="loginItems">
@@ -130,14 +130,6 @@
 		<div class="loginItems button">
 			<input id="loginButton" type="submit" value="Log In" name="Log In">
 		</div>
-		<div id="orContainer">
-			<hr>
-				<span id="or">or</span>
-			<hr>
-		</div>
-		<div id="githubContainer">
-			<a class="signupButton" href="/signup/github">Login with Github</a>
-		</div>
 		<div id="helpLinks">
 			<div id="recoverAccount">
 				<a href="/forgot">Forgot account?</a>
@@ -150,6 +142,8 @@
 	</form>
 
 </div>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

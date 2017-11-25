@@ -31,6 +31,7 @@
   border-radius: 5px;
   border: none;
   height: 40px;
+  cursor: pointer;
 }
 .errorText {
   color: red;
@@ -43,6 +44,12 @@
 }
 #helpLinks a {
   font-size: 20px;
+}
+#agreement {
+  max-width: 400px;
+  margin-top: 10px;
+  white-space: normal;
+  font-size: 13px;
 }
 
 </style>
@@ -99,6 +106,8 @@
       </div>
 
       <div class="errorText"><%= passwordError %></div>
+
+      <div id="agreement">By clicking "Create Account" you are agreeing to the Dans App <a href="/legal">Terms of Service and Privacy Policy.</a></div>
 
       <div id="buttonContainer">
         <input id="signupButton" value="Create Account" type="submit" name="Log In">

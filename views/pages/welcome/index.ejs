@@ -56,10 +56,11 @@
 	color: white;
 }
 #loginError {
+	color: white;
 	position: absolute;
-	color: red;
-	right: 135px;
-	bottom: -25px;
+	background: red;
+	width: 100%;
+	text-align: center;
 }
 /*Container for Summary and Sign up form*/
 #mainContainer {
@@ -151,6 +152,12 @@
 	align-self: flex-end;
 	font-size: 15px;
 }
+#agreement {
+	max-width: 400px;
+	margin-top: 10px;
+	white-space: normal;
+	font-size: 13px;
+}
 </style>
 </head>
 <body>
@@ -182,12 +189,13 @@
 		<div id="recoverAccount">
 			<a href="/forgot">Forgot account?</a>
 		</div>
-		<div id="loginError"><%= loginErrors %></div>
 	</form>
 
 </header>
 
 <section id="mainContainer">
+
+<div id="loginError"><%= loginErrors %></div>
 
 <div id="subContainer">
 
@@ -247,14 +255,19 @@
 				<input type="password" name="password" value="<%= passwordPassed %>">
 			</div>
 			<div class="errorText"><%= passwordError %></div>
+
+			<div id="agreement">By clicking "Create Account", or "Log in with Github" 
+			you are agreeing to the Dans App <a href="/legal">Terms of Service and Privacy Policy.</a></div>
+			
 			<div id="signupFormButtons">
 				<div id="githubContainer">
-					<a class="signupButton" href="/signup/github/">Login with Github</a>
+					<a class="signupButton" href="/signup/github/">Log in with Github</a>
 				</div>
 				<div id="createAccountButtonContainer">
 					<input class="signupButton" value="Create Account" type="submit" name="Log In">
 				</div>
 			</div>
+
 
 		</form>
 

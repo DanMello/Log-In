@@ -91,7 +91,7 @@
 
   </div>
 
-  <form id="forgotForm" action="/account/resendEmail" method="post">
+  <form id="forgotForm" action="/account/resendEmail" method="post" onsubmit="return formSubmit.disable(this)">
 
     <div class="formItems">
       <label>Enter your email:</label>
@@ -104,6 +104,8 @@
   </form>
 
 </div>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

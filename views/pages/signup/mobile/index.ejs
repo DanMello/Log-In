@@ -99,6 +99,11 @@
 	color: red;
 }
 
+#agreement {
+	margin-top: 20px;
+	font-size: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -121,7 +126,7 @@
 
 	<% } %>
 
-	<form id="signupForm" action="/alternate/signup" method="post">
+	<form id="signupForm" action="/alternate/signup" method="post" onsubmit="return formSubmit.disable(this)">
 
 		<div class="signupItems">
 			<label>Full Name:</label>
@@ -143,6 +148,9 @@
 			<input type="password" name="password" value="<%= passwordPassed %>">
 		</div>
 		<div class="errorText"><%= passwordError %></div>
+
+    <div id="agreement">By clicking "Create Account" you are agreeing to the Dans App <a href="/legal">Terms of Service and Privacy Policy.</a></div>
+
 		<div class="signupItems button">
 			<input id="signupButton" value="Create Account" type="submit" name="Log In">
 		</div>
@@ -158,6 +166,8 @@
 	</form>
 
 </div>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

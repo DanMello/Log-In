@@ -125,6 +125,9 @@ exports = module.exports = function(app, passport) {
     app.get('/signup/github/', passport.authenticate('github', { scope: ['user:email'] }))
     app.get('/signup/github/callback/', require('./views/pages/signup/index').signupGitHub)
 
+    //Terms of Service and Privacy Policy
+    app.get('/legal', require('./views/pages/legal').init)
+
     // Home page
     app.all('/', ensureAuthenticated)
     app.all('/', ensureVerified)
