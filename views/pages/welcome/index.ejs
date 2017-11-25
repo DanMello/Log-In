@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<title>Welcome</title>
+
 <style>
 * {
 	margin: 0;
@@ -164,7 +167,7 @@
 
 	<h1 id="mainHeading">Dans App</h1>
 
-	<form id="loginForm" action="/welcome/login" method="post">
+	<form id="loginForm" action="/welcome/login" method="post" onsubmit="return formSubmit.disable(this)">
 		<div class="loginItems">
 			<label>Username or Email:</label>
 			<input type="text" name="username" value="<%= username %>">
@@ -208,7 +211,7 @@
 
 		<p id="registerExplanation">Just fill out this simple form. (All fields required)</p>
 
-		<form id="signupForm" action="/welcome/signup" method="post">
+		<form id="signupForm" action="/welcome/signup" method="post" onsubmit="return formSubmit.disable(this)">
 
 			<%if (errors.formErrors.length > 0) { %>
 
@@ -246,7 +249,7 @@
 			<div class="errorText"><%= passwordError %></div>
 			<div id="signupFormButtons">
 				<div id="githubContainer">
-					<a class="signupButton" href="#">Login with Github</a>
+					<a class="signupButton" href="/signup/github/">Login with Github</a>
 				</div>
 				<div id="createAccountButtonContainer">
 					<input class="signupButton" value="Create Account" type="submit" name="Log In">
@@ -261,7 +264,9 @@
 
 </section>
 
-<% include ../../partials/footer %>	
+<% include ../../partials/footer %>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

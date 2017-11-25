@@ -89,7 +89,7 @@
 
     <div id="errorText"><%= formErrors %></div>
 
-    <form action="/forgot" method="post">
+    <form action="/forgot" method="post" onsubmit="return formSubmit.disable(this)">
       <div id="formInputContainer">
         <label id="emailLabel">Enter your email:</label>
         <input id="emailInput" type="text" name="email">
@@ -103,7 +103,9 @@
 
 </div>
 
-<% include ../../partials/footer %>   
+<% include ../../partials/footer %>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

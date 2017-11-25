@@ -64,7 +64,7 @@
 
     <p id="emailHeadingMessage">No problem, please enter your email to resend your verification token</p>
 
-    <form id="mainForm" action="/account/resendEmail" method='post'>
+    <form id="mainForm" action="/account/resendEmail" method='post' onsubmit="return formSubmit.disable(this)">
       <div class="inputCotainers">
         <label id="label">Email:</label>
         <input id="emailInput" type="text" name="email" value="<%= body.email %>">
@@ -77,6 +77,8 @@
   </div>
 
 </div>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

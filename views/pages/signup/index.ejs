@@ -70,7 +70,7 @@
 
     <h1>Sign up Form</h1>
     
-    <form action="/alternate/signup" method="post">
+    <form action="/alternate/signup" method="post" onsubmit="return formSubmit.disable(this)">
 
       <div class="signupItems">
         <label>Full Name:</label>
@@ -115,7 +115,9 @@
 
 </div>
 
-<% include ../../partials/footer %> 
+<% include ../../partials/footer %>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html

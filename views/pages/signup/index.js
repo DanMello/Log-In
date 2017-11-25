@@ -9,7 +9,7 @@ exports.init = function (req, res, next) {
 
 exports.signup = function (req, res, next) {
 
-  console.log(req.route.path)
+  console.log('signup once?')
 
   let redirectRoute 
 

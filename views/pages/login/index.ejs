@@ -67,7 +67,7 @@
 
 			<div id="loginError"><%= loginErrors %></div>
 
-			<form action="/alternate/login" method="post">
+			<form action="/alternate/login" method="post" onsubmit="return formSubmit.disable(this)">
 				
 				<div class="loginItems">
 					<label>Username or Email:</label>
@@ -95,6 +95,8 @@
 	</div>
 
 	<% include ../../partials/footer %>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>

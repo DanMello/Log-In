@@ -74,7 +74,7 @@
 
     <div id="errorText"><%= passwordErrors %></div>
     
-    <form id="forgotForm" action="/forgot/<%= token %>" method="post">
+    <form id="forgotForm" action="/forgot/<%= token %>" method="post" onsubmit="return formSubmit.disable(this)">
 
       <div class="formItems">
         <label>Password:</label>
@@ -97,6 +97,8 @@
 </div>
 
 <% include ../../partials/footer %>
+
+<script src="/scripts/formSubmit.js"></script>
 
 </body>
 </html>
