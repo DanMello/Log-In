@@ -1,4 +1,3 @@
-
 exports = module.exports = function(options) {
   
   const Config = require('../../config')
@@ -13,7 +12,7 @@ exports = module.exports = function(options) {
     html: options.message
   }
 
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
 
     transporter.sendMail(emailMessage, (err, info) => {
 

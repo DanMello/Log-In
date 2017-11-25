@@ -11,6 +11,7 @@
 	margin:0;
 	padding: 0;
 	box-sizing: border-box;
+	white-space: nowrap;
 }
 
 #mainContainer {
@@ -18,24 +19,25 @@
 	justify-content: center;
 }
 
-#subContainer {
-	width: 90%;
-}
-
 #subContainer h1 {
-	margin-top: 10px;
+	margin-top: 20px;
 	font-size: 40px;
+	min-width: 30%;
+	max-width: 50%;
 }
 
 #Error {
 	font-size: 25px;
+	margin-top: 10px;
+	display: block;
 	font-weight: bold;
 }
 
 #errorMessage {
 	font-size: 20px;
-	color: red
-
+	color: red;
+	margin-top: 10px;
+	display: block;
 }
 
 #subContainer p {
@@ -52,21 +54,21 @@
 </head>
 <body>
 
-<% include ../../../partials/mobile/header %>
+<% include ../../partials/header %>
 
 <div id="mainContainer">
 
     <div id="subContainer">
     	
-		<h1>Error Page</h1>
+			<h1>Error Page</h1>
 
-		<span id="Error">Error:</span>
+			<span id="Error">Error:</span>
 
-		<span id="errorMessage"><%= message %></span>
+			<span id="errorMessage"><%= message %></span>
 
-		<p>The email <span id="email"><%= account %></span> needs to be verified before you can log in or reset your password.
+			<p>The email <span id="email"><%= account %></span> needs to be verified before you can log in or reset your password.
 
-		<p>If your token has expired you can request a new one here: <a href="/account/resendEmail">Resend email</a></p>
+			<p>If your token has expired you can request a new one here: <a href="/account/resendEmail">Resend email</a></p>
 		
     </div>
 	

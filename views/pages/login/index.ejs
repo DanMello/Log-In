@@ -2,40 +2,99 @@
 <html>
 <head>
 
+	<title>Log in</title>
+	<link rel="stylesheet" type="text/css" href="/styles/globalContainerNotVerified.css">
+
 </head>
+<style type="text/css">
+.loginItems {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+.loginItems label {
+	font-size: 20px;
+}
+.loginItems input {
+	font-size: 20px;
+	padding: 3px;
+}
+#submitContainer {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+}
+#loginButton {
+	font-size: 20px;
+	color: white;
+	background: #5b88e8;
+	border-radius: 5px;
+	border: none;
+	height: 40px;
+}
+#loginError {
+	color: red;
+	margin-top: 10px;
+	font-size: 20px;
+}
+#recoverAccount {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 10px;
+}
+#recoverAccount a {
+	font-size: 20px;
+}
+
+</style>
 <body>
 
-<div id="mainContainer">
+	<% include ../../partials/header %>
 
-	<%if (loginErrors.length > 0) { %>
+	<div id="mainContainer">
 
-		<% var loginErrors = loginErrors %>
+		<%if (loginErrors.length > 0) { %>
 
-		<% var username = body[0].username %>
+			<% var loginErrors = loginErrors %>
 
-	<% } %>
+			<% var username = body[0].username %>
 
-	<h1 id="mainHeading">Dans App</h1>
+		<% } %>
 
-	<form id="loginForm" action="/alternate/login" method="post">
-		<div class="loginItems">
-			<label>Username or Email:</label>
-			<input type="text" name="username" value="<%= username %>">
+		<div id="subContainer">
+
+			<h1>Log in</h1>
+
+			<div id="loginError"><%= loginErrors %></div>
+
+			<form action="/alternate/login" method="post">
+				
+				<div class="loginItems">
+					<label>Username or Email:</label>
+					<input type="text" name="username" value="<%= username %>">
+				</div>
+
+				<div class="loginItems">
+					<label>Password:</label>
+					<input type="password" name="password">
+				</div>
+
+				<div id="submitContainer">
+					<input id="loginButton" type="submit" value="Log In" name="Log In">
+				</div>
+
+				<div id="recoverAccount">
+					<a href="/alternate/signup">Create Account</a>
+					<a href="/forgot">Forgot account?</a>
+				</div>
+
+			</form>
+
 		</div>
-		<div class="loginItems">
-			<label>Password:</label>
-			<input type="password" name="password">
-		</div>
-		<div class="loginItems">
-			<input id="loginButton" type="submit" value="Log In" name="Log In">
-		</div>
-		<div id="recoverAccount">
-			<a href="/forgot">Forgot account?</a>
-		</div>
-		<div id="loginError"><%= loginErrors %></div>
-	</form>
 
-</div>
+	</div>
+
+	<% include ../../partials/footer %>
 
 </body>
 </html>

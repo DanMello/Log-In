@@ -1,4 +1,4 @@
-function sendEmail(req, user, type) {
+exports.sendVerificationEmail = function(req, user, done) {
 
   let crypto = require('crypto')
 
@@ -13,16 +13,6 @@ function sendEmail(req, user, type) {
     .first()
     .then(token => {
 
-      if (token && (type === 'send')) {
-
-        let error = new Error('403 Forbidden Error')
-
-        error.status = 403
-
-        throw error  
-
-      }
-
       if (token && token.expires > Date.now()) {
 
         let tokenNotExpiredError = new Error("Your token has not yet expired, please check your email")
@@ -33,7 +23,7 @@ function sendEmail(req, user, type) {
 
       }
 
-      if ((token && token.expires < Date.now()) && (type === 'resend')) {
+      if (token && token.expires < Date.now()) {
 
         return req.app.db('tokens')
           .where('userid', user.id)
@@ -44,13 +34,13 @@ function sendEmail(req, user, type) {
     }).then(() => {
 
       return req.app.db('tokens')
-      .insert(emailToken)
+        .insert(emailToken)
 
     }).then(() => {
 
       let emailMessage = 
         `Hello, please verify your account by clicking the link\n\n
-         ${req.protocol}://${req.headers.host}/verification/${emailToken.token}\n\n
+         ${req.protocol}://${req.headers.host}/account/verification/${emailToken.token}\n\n
         `
       return req.app.utility.nodemailer({
         from: '"Dans App" <jdanmello@gmail.com>',
@@ -59,92 +49,14 @@ function sendEmail(req, user, type) {
         message: emailMessage
       })
 
+    }).catch(err => {
+
+      throw err
+        
     })
   
 }
 
-exports.init = function(req, res) {
-
-  res.render('pages/welcome/emailverification' + req.filepath + '/resendEmail', {
-    error: req.flash('emailError'),
-    body: req.flash('body')
-  })
-
-}
-
-exports.sendVerificationEmail = function(req, res, next) {
-
-  sendEmail(req, req.user, 'send').then(() => {
-    
-    res.render('pages/welcome' + req.filepath + '/postlogin')
-
-  }).catch(err => {
-
-    next(err)
-
-  })
-
-}
-
-exports.resendVerificationEmail = function(req, res, next) {
-
-  req.assert('email', 'Email required').notEmpty()
-  req.assert('email', 'Valid email required').isEmail()
-
-  req.getValidationResult().then(result => {
-
-    if (!result.isEmpty()) {
-
-      let error = result.array()[0].msg
-
-      req.flash('emailError', error)
-      req.flash('body', req.body)
-      res.redirect('/resendEmail')
-
-    } else {
-
-      return req.app.db('users')
-        .where('email', req.body.email)
-        .first()
-        .then(user => {
-
-          if (!user) {
-
-            let userNotfound = new Error('There is no account with that email*')
-
-            userNotfound.status = 404
-
-            throw userNotfound
-
-          }
-
-          return sendEmail(req, user, 'resend')
-
-        }).then(() => {
-
-          res.render('pages/welcome' + req.filepath + '/postlogin')
-
-        }).catch(err => {
-
-          if (err.status === 404) {
-
-            req.flash('emailError', err.message)
-            req.flash('body', req.body)
-            res.redirect(req.filepath)
-
-          } else {
-
-            return next(err)
-
-          }
-
-        })
-
-    }
-
-  })
-
-}
 
 exports.verify = function(req, res, next) {
 
@@ -196,7 +108,10 @@ exports.verify = function(req, res, next) {
       return req.app.db('users')
         .where('id', user.id)
         .first()
-        .update({ isVerified: 1})
+        .update({ 
+          isVerified: 1,
+          tempVerificationExpires: null
+        })
 
     }).then(verifiedUser => {
 
@@ -214,7 +129,7 @@ exports.verify = function(req, res, next) {
 
     }).then(() => {
 
-      res.render('pages/welcome/emailverification' + req.filepath + '/verify', {
+      res.render('pages/welcome/emailverification' + req.filepath + 'verify', {
         email: user.email
       })
 

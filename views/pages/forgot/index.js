@@ -72,12 +72,12 @@ exports.forgotAccount = function (req, res, next) {
 
             notVerifiedError.status = 400
 
-		    notVerifiedError.page = '/notVerified400'
+    		    notVerifiedError.page = '/notVerified400'
 
-		    notVerifiedError.object = {
-		      message: notVerifiedError.message,
-		      account: req.body.email
-		    }
+    		    notVerifiedError.object = {
+    		      message: notVerifiedError.message,
+    		      account: req.body.email
+    		    }
 
             throw notVerifiedError
 
@@ -115,7 +115,7 @@ exports.forgotAccount = function (req, res, next) {
 
         }).then(() => {
 
-          res.render('pages/forgot' + req.filepath + '/emailSent')
+          res.render('pages/forgot' + req.filepath + 'emailSent')
 
         }).catch(err => {
 
@@ -150,7 +150,7 @@ exports.verify = function (req, res, next) {
 
     }).then(() => {
 
-      res.render('pages/forgot' + req.filepath + '/reset', {
+      res.render('pages/forgot' + req.filepath + 'reset', {
         token: req.params.token,
         passwordErrors: req.flash('formErrors'),
         body: req.flash('body')
@@ -171,6 +171,8 @@ exports.resetPassword = function (req, res, next) {
     .where('resetPasswordToken', req.params.token)
     .first()
     .then(user => {
+
+      if (!user) throw new Error('Password reset token expired or invalid')
 
       userEmail = user.email
 
@@ -234,7 +236,7 @@ exports.resetPassword = function (req, res, next) {
 
     }).then(() => {
 
-      res.render('pages/forgot' + req.filepath + '/passwordReset')
+      res.render('pages/forgot' + req.filepath + 'passwordReset')
 
     }).catch(err => {
 

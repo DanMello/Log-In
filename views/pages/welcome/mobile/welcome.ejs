@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Welcome</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+* {
+	font-family: sans-serif;
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#mainContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#subContainer {
+    width: 90%;
+    margin-top: 10px;
+}
+
+#welcomeContainer {
+	margin-top: 10px;
+}
+
+#welcomeHeading {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#username {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.welcomeMessage {
+	font-size: 18px;
+}
+
+.second	{
+	margin-top: 10px;
+}
+
+#email {
+	color: blue;
+	font-size: 18px;
+	text-decoration: underline;
+	display: block;
+	margin-top: 5px;
+}
+
+#errorStack {
+	margin-top: 10px;
+}
+
+#skipMessage {
+	margin-top: 10px;
+	display: block;
+	color: red;
+}
+
+#buttonContainer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+#buttonContainer a {
+	padding: 10px;
+	border-radius: 5px;
+	color: white;
+	text-decoration: none;
+	flex-grow: 1;
+	text-align: center;
+}
+
+#firstLink {
+	background: #5b88e8;
+}
+
+#secondLink {
+	background: #86af49;
+	margin-left: 5px;
+}
+
+#oops {
+	margin-top: 20px;
+	display: block;
+	font-size: 18px;
+}
+
+</style>
+</head>
+<body>
+
+<% include ../../../partials/mobile/header %>
+
+<div id="mainContainer">
+	
+	<div id="subContainer">
+		
+		<span id="welcomeHeading">Welcome </span>
+
+		<span id="username"> <%= username %></span>
+
+		<div id="welcomeContainer">
+
+			<p class="welcomeMessage">Thank you for creating an account with us, we have sent you an email at</p>
+
+			<span id="email"><%= email %></span> 
+
+			<p class="welcomeMessage second">Before continuing we would like you to verify your email address.</p>
+			
+		</div>
+
+		<div id="buttonContainer">
+			<a id="firstLink" href="/account/resendEmail">Need to resend email?</a>
+			<a id="secondLink" href="/account/skipVerification/<%= id %>">Skip for now &#187;</a>
+		</div>
+
+		<a id="oops" href="/logout">Not you log out?</a>
+
+
+	</div>
+	
+</div>	
+
+
+</body>
+</html>

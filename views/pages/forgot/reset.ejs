@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Password Reset</title>
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerNotVerified.css">
+
+<style>
+
+#passwordHeadingMessage {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.formItems {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.formItems label {
+  font-size: 20px;
+}
+
+.formItems input {
+  font-size: 20px;
+  padding: 3px;
+}
+
+#buttonContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+#buttonInput {
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #5b88e8;
+  color: white;
+  height: 40px;
+}
+
+#errorText {
+  color: red;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<% include ../../partials/header %>
+
+<div id="mainContainer">
+
+  <%if (passwordErrors.length > 0) { %>
+
+    <% var passwordErrors = passwordErrors %>
+
+    <% var password = body[0].password %>
+
+    <% var password2 = body[0].password2 %>
+
+  <% } %>
+
+  <div id="subContainer">
+
+    <h1>Reset Password</h1>
+
+    <p id="passwordHeadingMessage">Enter a new password for your account, remember password must contain 6 to 20 characters.</p>
+
+    <div id="errorText"><%= passwordErrors %></div>
+    
+    <form id="forgotForm" action="/forgot/<%= token %>" method="post">
+
+      <div class="formItems">
+        <label>Password:</label>
+        <input type="password" name="password" value="<%= password %>">
+      </div>
+
+      <div class="formItems">
+        <label>Repeat Password:</label>
+        <input type="password" name="password2" value="<%= password2 %>">
+      </div>
+
+      <div id="buttonContainer">
+        <input id="buttonInput" type="submit" value="Reset password">
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<% include ../../partials/footer %>
+
+</body>
+</html>

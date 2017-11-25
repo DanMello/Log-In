@@ -2,14 +2,39 @@
 <html>
 <head>
 
+  <title>Verified</title>
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerNotVerified.css">
+
 <style>
+#statement, #linkText{
+  font-size: 20px;
+  margin-top: 10px;
+}
+#email {
+  font-style: italic;
+  color: blue;
+}
 </style>
 </head>
 <body>
 
-<h1>Thank you, your email <%= email %> is now verified</h1>
+<% include ../../../partials/header %>
 
-<a href="/alternate/login">Click here to go to your to log in</a>
+<div id="mainContainer">
+
+  <div id="subContainer">
+
+    <h1>Thank you</h1>
+
+    <p id="statement">Your email <span id="email"><%= email %></span> is now verified</p>
+
+    <p id="linkText">To log in click here <a href="/alternate/login"> log in</a></p>
+
+  </div>
+
+</div>
+
+<% include ../../../partials/footer %> 
 
 </body>
 </html>

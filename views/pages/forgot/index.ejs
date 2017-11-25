@@ -1,1 +1,109 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forgot</title>
+</head>
+<style type="text/css">
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+}
+
+#subContainer {
+  min-height: 612px;
+  margin-top: 20px;
+  min-width: 400px;
+}
+
+#dontWorry {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+#formInputContainer {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+}
+
+#emailLabel {
+  font-size: 20px;
+}
+
+#emailInput {
+  font-size: 20px;
+  margin-top: 5px;
+  padding: 3px;
+}
+
+#buttonContainer {
+  margin-top: 20px;
+}
+
+#button {
+  padding: 6px;
+  font-size: 20px;
+  border-radius: 5px;
+  background: #5b88e8;
+  color: white;
+  border: none;
+  width: 100%;
+}
+
+#errorText {
+  color: red;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+</style>
+<body>
+
+<% include ../../partials/header %>
+
+<div id='mainContainer'>
+  
+  <div id="subContainer"> <!--Secondary Container -->
+
+    <%if (formErrors.length > 0) { %>
+
+      <% var formErrors = formErrors %>
+
+      <% var email = body[0].email %>
+
+    <% } %>
+    
+    <h1>Forgot Account?</h1>
+
+    <p id="dontWorry">Don't worry, just type in your email and we'll send you reset instructions.</p>
+
+    <div id="errorText"><%= formErrors %></div>
+
+    <form action="/forgot" method="post">
+      <div id="formInputContainer">
+        <label id="emailLabel">Enter your email:</label>
+        <input id="emailInput" type="text" name="email">
+      </div>
+      <div id="buttonContainer">
+        <input id="button" type="submit" name="submit" value="Send Email">
+      </div>
+    </form>
+
+  </div>  
+
+</div>
+
+<% include ../../partials/footer %>   
+
+</body>
+</html>

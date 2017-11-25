@@ -8,34 +8,33 @@ function ensureAuthenticated (req, res, next) {
 
   }
 
-  console.log('rann')
-
   return res.redirect('/welcome/login')
 
 }
 
 function ensureVerified (req, res, next) {
 
-  if (!req.user.isVerified && req.user.oauth_provider === null) {
+  let tempAccess = req.user.tempVerificationExpires
 
-    console.log('rann')
+  if (tempAccess !== null && tempAccess > Date.now()) {
 
-    let accountNotVerifed = new Error("Your account is not verified please check your email")
-
-    accountNotVerifed.status = 400
-
-    accountNotVerifed.page = '/verified400'
-
-    accountNotVerifed.object = {
-      message: accountNotVerifed.message,
-      account: req.user.email
-    }
-
-    return next(accountNotVerifed)
+    return next()
 
   }
 
-  return next()
+  if ((!req.user.isVerified && req.user.oauth_provider === null)) {
+
+    res.render('pages/welcome' + req.filepath + 'welcome', {
+      username: req.user.username,
+      email: req.user.email,
+      id: req.user.id
+    })
+
+  } else {
+
+    return next()
+  }
+
 
 }
 
@@ -75,7 +74,7 @@ function checkDevice (req, res, next) {
 
   if (req.headers.host === url) {
 
-    req.filepath = '/mobile'
+    req.filepath = '/mobile/'
 
   } else {
 
@@ -102,16 +101,10 @@ exports = module.exports = function(app, passport) {
     app.get('/logout', require('./views/pages/login').logout)
 
     // Verification routes
-    app.all('/account*', ensureAuthenticated)
-    app.all('/account*', emailAlreadyVerified)
-    app.get('/account/sendEmail', require('./views/pages/welcome/emailverification').sendVerificationEmail)
-    
-    //Not in account route incase user checks email from another browser
-    app.get('/verification/:token', require('./views/pages/welcome/emailverification').verify)
-
-    //Also not in account route incase user forgets account before he verifies email lol
-    app.get('/resendEmail', require('./views/pages/welcome/emailverification').init)
-    app.post('/resendEmail', require('./views/pages/welcome/emailverification').resendVerificationEmail)
+    app.get('/account/skipVerification/:id', require('./views/pages/welcome').skipVerification)
+    app.get('/account/verification/:token', require('./views/pages/welcome/emailverification').verify)
+    app.get('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').init)
+    app.post('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').resendVerificationEmail)
 
     //Forgot account?
     app.get('/forgot', require('./views/pages/forgot').init)
@@ -136,5 +129,9 @@ exports = module.exports = function(app, passport) {
     app.all('/', ensureAuthenticated)
     app.all('/', ensureVerified)
     app.get('/', require('./views/pages/home').init)
+
+    app.get('/test', (req, res, next) => {
+      res.render('pages/forgot/passwordReset')
+    })
 
 }

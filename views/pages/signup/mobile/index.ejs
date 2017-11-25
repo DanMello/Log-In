@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
@@ -103,9 +103,9 @@
 </head>
 <body>
 
-<div id="mainContainer">
+<% include ../../../partials/mobile/header %>
 
-	<% include ../../../partials/mobile/header %>
+<div id="mainContainer">
 
 	<%if (formErrors.length > 0) { %>
 
@@ -158,8 +158,6 @@
 	</form>
 
 </div>
-
-<script src="/scripts/scripts.js"></script>
 
 </body>
 </html>

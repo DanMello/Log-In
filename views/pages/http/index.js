@@ -20,8 +20,9 @@ exports.errorHandler = function(err, req, res, next) {
     
   } else {
     
-    res.render('pages/http' + req.filepath + '/defaultError', {
-        message: err.message,
+    res.render('pages/http' + req.filepath + 'defaultError', {
+        message: err.message || 'Something went wrong in our end, please try again in a few minutes',
+        errorStatus: err.status,
         error: err.stack
     })
 

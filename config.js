@@ -11,7 +11,7 @@ const config = {
         database: 'localdb' // Put your development database name here, for this project
       }
     },
-    mobileurl: '10.0.0.189' // This is the ip address on my laptop in my local network, im using as mobile address because i can access it from my iphone and i leave local host as the desktop one 
+    mobileurl: '127.0.0.1' // This is the ip address on my laptop in my local network, im using as mobile address because i can access it from my iphone and i leave local host as the desktop one 
   },
   production: {
     database: {

@@ -5,15 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
+* {
+	font-family: sans-serif;
+	margin:0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#mainContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#subContainer {
+	width: 90%;
+}
+
+#subContainer p {
+	font-size: 22px;
+	margin-top: 10px;
+}
+
+#subContainer a {
+	display: block;
+	margin-top: 10px;
+}
+
 </style>
 </head>
 <body>
 
 <% include ../../../../partials/mobile/header %>
 
-<h1>Thank you, your email <%= email %> is now verified</h1>
+<div id="mainContainer">
 
-<a href="/alternate/login">Click here to go to your to log in</a>
+	<div id="subContainer">
+
+		<p>Thank you, your email jdanmello@gmail.com is now verified</p>
+
+		<a href="/alternate/login">Click here to log in</a>
+
+	</div>
+
+</div>
 
 </body>
 </html>

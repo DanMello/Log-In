@@ -55,14 +55,17 @@ Then
 	mysql -u deploy -pthepasswordhere -h 172.16.60.134
 
 
-CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, fullname VARCHAR(255), username VARCHAR(255), email VARCHAR(255), isVerified BOOLEAN NOT NULL DEFAULT 0, password VARCHAR(255), resetPasswordToken VARCHAR(255), resetPasswordExpires VARCHAR(255), oauth_provider VARCHAR(255), oauth_id VARCHAR(255));
+CREATE TABLE users (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, fullname VARCHAR(255), username VARCHAR(255), email VARCHAR(255), isVerified BOOLEAN NOT NULL DEFAULT 0, tempVerificationExpires VARCHAR(255), password VARCHAR(255), resetPasswordToken VARCHAR(255), resetPasswordExpires VARCHAR(255), oauth_provider VARCHAR(255), oauth_id VARCHAR(255));
 
 
-	DROP TABLE tokens;
-	DELETE FROM users;
-	CREATE TABLE tokens (userid int NOT NULL, token VARCHAR(255), expires VARCHAR(255));
-	ALTER TABLE tokens ADD CONSTRAINT fk_user_id FOREIGN KEY (userid) REFERENCES users (id);
+DROP TABLE tokens;
+DELETE FROM users;
+CREATE TABLE tokens (userid int NOT NULL, token VARCHAR(255), expires VARCHAR(255));
+ALTER TABLE tokens ADD CONSTRAINT fk_user_id FOREIGN KEY (userid) REFERENCES users (id);
 
 update users set isVerified=1 where username='dmello123';
 
 assign db instance into app so you can you use if off of the app instance for express 
+
+
+CREATE TABLE receipts (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, location VARCHAR(255), date VARCHAR(255), amount VARCHAR(255), expense_type VARCHAR(255));

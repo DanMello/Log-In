@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Log in</title>
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerNotVerified.css">
+
+</head>
+<style type="text/css">
+.signupItems {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.signupItems label {
+  font-size: 20px;
+}
+.signupItems input {
+  font-size: 20px;
+  padding: 3px;
+}
+#buttonContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#signupButton {
+  font-size: 20px;
+  color: white;
+  background: #5b88e8;
+  border-radius: 5px;
+  border: none;
+  height: 40px;
+}
+.errorText {
+  color: red;
+  font-size: 20px;
+}
+#helpLinks {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+#helpLinks a {
+  font-size: 20px;
+}
+
+</style>
+<body>
+
+<% include ../../partials/header %>
+
+  <%if (formErrors.length > 0) { %>
+
+    <% var fullnameError = formErrors[0].fullname !== undefined ? formErrors[0].fullname.msg : '' %>
+    <% var usernameError = formErrors[0].userid !== undefined ? formErrors[0].userid.msg : '' %>
+    <% var emailError = formErrors[0].username !== undefined ? formErrors[0].username.msg : '' %>
+    <% var passwordError = formErrors[0].password !== undefined ? formErrors[0].password.msg : '' %>
+
+    <% var fullnamePassed = body[0].fullname %>
+    <% var usernamePassed = body[0].userid %>
+    <% var emailPassed = body[0].username %>
+    <% var passwordPassed = body[0].password %>
+
+  <% } %>
+
+<div id="mainContainer">
+
+  <div id="subContainer">
+
+    <h1>Sign up Form</h1>
+    
+    <form action="/alternate/signup" method="post">
+
+      <div class="signupItems">
+        <label>Full Name:</label>
+        <input type="text" name="fullname" value="<%= fullnamePassed %>">
+      </div>
+
+      <div class="errorText"><%= fullnameError %></div>
+
+      <div class="signupItems">
+        <label>Username:</label>
+        <input type="text" name="userid" value="<%= usernamePassed %>">
+      </div>
+
+      <div class="errorText"><%= usernameError %></div>
+
+      <div class="signupItems">
+        <label>Email:</label>
+        <input type="text" name="username" value="<%= emailPassed %>">
+      </div>
+
+      <div class="errorText"><%= emailError %></div>
+
+      <div class="signupItems">
+        <label>Password:</label>
+        <input type="password" name="password" value="<%= passwordPassed %>">
+      </div>
+
+      <div class="errorText"><%= passwordError %></div>
+
+      <div id="buttonContainer">
+        <input id="signupButton" value="Create Account" type="submit" name="Log In">
+      </div>
+
+      <div id="helpLinks">
+        <a href="/alternate/login">Have an account?</a>
+        <a href="/forgot">Forgot account?</a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<% include ../../partials/footer %> 
+
+</body>
+</html

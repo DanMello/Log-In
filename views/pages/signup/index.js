@@ -9,6 +9,8 @@ exports.init = function (req, res, next) {
 
 exports.signup = function (req, res, next) {
 
+  console.log(req.route.path)
+
   let redirectRoute 
 
   if (req.route.path === '/welcome/signup') {
@@ -45,7 +47,7 @@ exports.signup = function (req, res, next) {
     } else {
 
       req._passport.instance.authenticate('local-register', {
-        successRedirect: '/account/sendEmail',
+        successRedirect: '/',
         failureRedirect: redirectRoute
       })(req, res, next)
 
@@ -57,11 +59,20 @@ exports.signup = function (req, res, next) {
 
 exports.signupGitHub = function (req, res, next) {
 
-  req._passport.instance.authenticate('github', { 
+  req._passport.instance.authenticate('github', {
 
     failureRedirect: '/alternate/login',
-    successRedirect: '/' 
+    successRedirect: '/'
 
   })(req, res, next)
 
 }
+
+/*
+  
+  Well we found our first issue with using multiple domains,
+  we cannot use multiple domains when logging in with oauth
+  so i guess the solution would be to create a sub domain just for oauth 
+  which would be used for both mobile and web
+
+*/

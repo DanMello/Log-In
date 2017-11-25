@@ -3,13 +3,72 @@
 <head>
 
 <style>
+* {
+  font-family: sans-serif;
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+}
+
+#subContainer {
+  min-height: 612px;
+
+}
+
+#subContainer h1 {
+  margin-top: 20px;
+  font-size: 40px;
+}
+
+#Error {
+  font-size: 25px;
+  margin-top: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+#errorMessage {
+  font-size: 20px;
+  color: red;
+  margin-top: 10px;
+  display: block;
+}
+
+#subContainer p {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+#email {
+  text-decoration: underline;
+  color: blue;
+}
 </style>
 </head>
 <body>
 
-<h1><%= message %></h1>
+<% include ../../partials/header %>
 
-<p><%= error %></p>
+<div id="mainContainer">
+
+  <div id="subContainer">
+
+    <h1>Error Page</h1>
+
+    <span id="Error">Error:</span>
+
+    <span id="errorMessage"><%= message %></span>
+
+  </div>
+
+</div>
+
+<% include ../../partials/footer %> 
 
 </body>
 </html>

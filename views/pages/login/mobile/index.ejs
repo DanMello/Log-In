@@ -2,6 +2,7 @@
 <html>
 <head>
 
+<title>Mobile Login page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -42,8 +43,7 @@
     margin-top: 18px;
 }
 
-.button input {
-	-webkit-appearance: none;
+.button input { 	-webkit-appearance: none;
 	background: #5b88e8;
 	height: 40px;
 	color: white;
@@ -104,7 +104,7 @@
 </head>
 <body>
 
-<div id="loading"></div>
+<% include ../../../partials/mobile/header %>
 
 <div id="mainContainer">
 
@@ -115,9 +115,6 @@
 		<% var username = body[0].username %>
 
 	<% } %>
-
-	<% include ../../../partials/mobile/header %>
-
 	
 	<form id="loginForm" action="/alternate/login" method="post">
 

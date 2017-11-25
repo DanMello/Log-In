@@ -3,20 +3,80 @@
 <head>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+#mainContainer {
+  display: flex;
+  justify-content: center;
+}
+#subContainer {
+  margin-top: 20px;
+}
+#errorText {
+  color: red;
+  font-size: 20px;
+  margin-top: 10px;
+}
+#emailHeadingMessage {
+  font-size: 20px;
+  margin-top: 10px;
+}
+#mainForm {
+  margin-top: 10px;
+}
+.inputCotainers {
+  display: flex;
+  flex-direction: column;
+}
+#label {
+  font-size: 20px;
+}
+#emailInput {
+  font-size: 20px;
+  padding: 3px;
+}
+#submitButton {
+  margin-top: 10px;
+  font-size: 20px;
+  height: 35px;
+  border-radius: 5px;
+  background: #5b88e8;
+  color: white;
+  border: none;
+}
 </style>
 </head>
 <body>
 
-<h1>Please enter your email to resend your verification token</h1>
+<% include ../../../partials/header %>
 
-<div><%= error %></div>
+<div id="mainContainer">
 
-<form action="/resendEmail" method='post'>
+  <div id="subContainer">
 
-  <input type="text" name="email" value="<%= body.email %>">
-  <input type="submit" name="submit">
+    <h1>Need another token?</h1>
 
-</form>
+    <div id="errorText"><%= error %></div>
+
+    <p id="emailHeadingMessage">No problem, please enter your email to resend your verification token</p>
+
+    <form id="mainForm" action="/account/resendEmail" method='post'>
+      <div class="inputCotainers">
+        <label id="label">Email:</label>
+        <input id="emailInput" type="text" name="email" value="<%= body.email %>">
+      </div>
+      <div class="inputCotainers">
+        <input id="submitButton" type="submit" name="submit" value="Send Token">
+      </div>
+
+    </form>
+  </div>
+
+</div>
 
 </body>
 </html>

@@ -14,7 +14,7 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	background: lightgrey;
+	background:  #34495E;
 	height: 100px;
 }
 #mainHeading {
@@ -50,7 +50,7 @@
 	color: white;
 	font-size: 15px;
 	text-decoration: none;
-	color: #3366FF;
+	color: white;
 }
 #loginError {
 	position: absolute;
@@ -61,13 +61,15 @@
 /*Container for Summary and Sign up form*/
 #mainContainer {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
+	background: #F0F3F4;
 }
 /*Summary*/
 #subContainer {
 	display: flex;
 	justify-content: space-around;
 	width: 90%;
+	min-height: 612px;
 }
 #summaryContainer {
 	padding: 0px 10px 0px 10px;	
@@ -175,7 +177,7 @@
 			<input id="loginButton" type="submit" value="Log In" name="Log In">
 		</div>
 		<div id="recoverAccount">
-			<a href="/#">Forgot account?</a>
+			<a href="/forgot">Forgot account?</a>
 		</div>
 		<div id="loginError"><%= loginErrors %></div>
 	</form>
@@ -224,47 +226,6 @@
 			
 			<div class="signupItems">
 				<label>Full Name:</label>
-				<input type="text" name="fullname" value="Dan Mello">
-			</div>
-			<div class="errorText"><%= fullnameError %></div>
-			<div class="signupItems">
-				<label>Username:</label>
-				<input type="text" name="userid" value="jdanmello">
-			</div>
-			<div class="errorText"><%= usernameError %></div>
-			<div class="signupItems">
-				<label>Email:</label>
-				<input type="text" name="username" value="jdanmello@gmail.com">
-			</div>
-			<div class="errorText"><%= emailError %></div>
-			<div class="signupItems">
-				<label>Password:</label>
-				<input type="password" name="password" value="neuza123">
-			</div>
-			<div class="errorText"><%= passwordError %></div>
-			<div id="signupFormButtons">
-				<div id="githubContainer">
-					<a class="signupButton" href="#">Login with Github</a>
-				</div>
-				<div id="createAccountButtonContainer">
-					<input class="signupButton" value="Create Account" type="submit" name="Log In">
-				</div>
-			</div>
-
-		</form>
-
-	</div>
-
-</div>
-
-</section>
-
-</body>
-</html>
-
-
-<!-- 			<div class="signupItems">
-				<label>Full Name:</label>
 				<input type="text" name="fullname" value="<%= fullnamePassed %>">
 			</div>
 			<div class="errorText"><%= fullnameError %></div>
@@ -290,35 +251,17 @@
 				<div id="createAccountButtonContainer">
 					<input class="signupButton" value="Create Account" type="submit" name="Log In">
 				</div>
-			</div> -->
+			</div>
 
+		</form>
 
+	</div>
 
-<!-- 			<div class="signupItems">
-				<label>Full Name:</label>
-				<input type="text" name="fullname" value="Dan Mello">
-			</div>
-			<div class="errorText"><%= fullnameError %></div>
-			<div class="signupItems">
-				<label>Username:</label>
-				<input type="text" name="userid" value="jdanmello">
-			</div>
-			<div class="errorText"><%= usernameError %></div>
-			<div class="signupItems">
-				<label>Email:</label>
-				<input type="text" name="username" value="jdanmello@gmail.com">
-			</div>
-			<div class="errorText"><%= emailError %></div>
-			<div class="signupItems">
-				<label>Password:</label>
-				<input type="password" name="password" value="neuza123">
-			</div>
-			<div class="errorText"><%= passwordError %></div>
-			<div id="signupFormButtons">
-				<div id="githubContainer">
-					<a class="signupButton" href="#">Login with Github</a>
-				</div>
-				<div id="createAccountButtonContainer">
-					<input class="signupButton" value="Create Account" type="submit" name="Log In">
-				</div>
-			</div> -->
+</div>
+
+</section>
+
+<% include ../../partials/footer %>	
+
+</body>
+</html>

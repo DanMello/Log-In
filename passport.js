@@ -96,6 +96,10 @@ exports = module.exports = function(app, passport) {
 
         newUser.id = ids[0]
 
+        return require('./views/pages/welcome/emailverification').sendVerificationEmail(req, newUser)
+
+      }).then(() => {
+
         done(null, newUser)
 
       }).catch(err => {
@@ -113,11 +117,13 @@ exports = module.exports = function(app, passport) {
   }))
   
   passport.use(new GitHubStrategy({
-    clientID: 'a4d6061451f9d35c0fb8',
-    clientSecret: 'b7853f009997e81d1899bbd7b6bac9dd302e820b',
+    clientID: process.env.GITHUB_CLIENTID,
+    clientSecret: process.env.GITHUB_SECRET,
     callbackURL: '/signup/github/callback/'
   },
   function(accessToken, refreshToken, profile, done) {
+
+    let newUser
 
     app.db('users')
       .where('oauth_provider', 'github')
@@ -130,18 +136,24 @@ exports = module.exports = function(app, passport) {
           return done(null, user)
         }
 
-        const newUser = {
+        newUser = {
           oauth_provider: 'github',
           oauth_id: profile.username
         }
 
-        app.db('users')
+        return app.db('users')
           .insert(newUser)
-          .then(id => {
-            newUser.id = id[0]
-            return done(null, newUser)
-          })
 
+      }).then(id => {
+
+        newUser.id = id[0]
+
+        return done(null, newUser)
+
+      }).catch(err => {
+
+        done(err)
+        
       })
 
   }))
