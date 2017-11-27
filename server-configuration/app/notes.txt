@@ -1,0 +1,8 @@
+
+/* 
+
+  1. Make sure redis-server is running because that can mess up sessions
+  
+
+
+*/

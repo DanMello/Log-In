@@ -1,9 +1,9 @@
 exports = module.exports = function(options) {
-  
-  const Config = require('../../config')
-  const nodemailer = require('nodemailer')
 
-  let transporter = nodemailer.createTransport(Config.get('default')['nodemailer'])
+  let config = require('../../config')()
+
+  let nodemailer = require('nodemailer')
+  let transporter = nodemailer.createTransport(config.settings.nodemailer)
 
   let emailMessage = {
     from: options.from,

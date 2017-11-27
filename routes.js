@@ -63,14 +63,14 @@ function emailAlreadyVerified (req, res, next) {
   }
 
   return next()
-
+  
 }
 
-// So this function sets a path to render mobile html using the same routes based on the user agent "Mobile"
+// So this function sets a path to render mobile HTML using the same routes based on the user agent "Mobile"
 
 function checkDevice (req, res, next) {
 
-  let url = req.app.config.get(req.app.config.enviroment)['mobileurl']
+  let url = req.app.config.settings[req.app.config.enviroment].mobileurl
 
   if (req.headers.host === url) {
 
@@ -91,7 +91,7 @@ exports = module.exports = function(app, passport) {
     //Check for mobile users
     app.all('*', checkDevice)
 
-    // Welcome page which includes a login and signup form
+    // Welcome page which includes a login and sign up form
     app.all('/welcome*', ensureSignedOut)
     app.get('/welcome/login', require('./views/pages/welcome').init)
     app.post('/welcome/login', require('./views/pages/login').login)
@@ -117,11 +117,11 @@ exports = module.exports = function(app, passport) {
     app.get('/alternate/login', require('./views/pages/login').init)
     app.post('/alternate/login', require('./views/pages/login').login)
 
-    //signup only page
+    //sign up only page
     app.get('/alternate/signup', require('./views/pages/signup').init)
     app.post('/alternate/signup', require('./views/pages/signup').signup)
 
-    //social signup
+    //social sign up
     app.get('/signup/github/', passport.authenticate('github', { scope: ['user:email'] }))
     app.get('/signup/github/callback/', require('./views/pages/signup/index').signupGitHub)
 
@@ -133,10 +133,9 @@ exports = module.exports = function(app, passport) {
     app.all('/', ensureVerified)
     app.get('/', require('./views/pages/home').init)
 
+    //test route
     app.get('/test', (req, res, next) => {
       res.render('pages/forgot/passwordReset')
     })
 
 }
-
-//Testing

@@ -49,15 +49,13 @@ exports.resendVerificationEmail = function(req, res, next) {
 
           }
 
-          return require('./index').sendVerificationEmail(req, user)
+          return require('./').sendVerificationEmail(req, user)
 
         }).then(() => {
 
           res.render('pages/welcome' + req.filepath + 'resendEmail')
 
         }).catch(err => {
-
-          console.log('yooooooo', err)
 
           if (err.status === 404) {
 

@@ -1,31 +1,61 @@
-const enviroment = process.env.NODE_ENV || 'development'
+exports = module.exports = function(app) {
 
-const config = {
-  development: {
-    database: {
-      client: 'mysql',
-      connection: {
-        host: '127.0.0.1', // Default local mysql host
-        user: 'root', // Put your user for mysql here
-        password: 'Mysecurepassword1!', // Put your password for mysql here
-        database: 'localdb' // Put your development database name here, for this project
+  let application = app || {}
+  
+  let enviroment = process.env.NODE_ENV || 'development'
+
+  let settings = {
+    development: {
+      database: {
+        client: 'mysql',
+        connection: {
+          host: '127.0.0.1', // Default local mysql host
+          user: 'root', // Put your user for mysql here
+          password: 'Mysecurepassword1!', // Put your password for mysql here
+          database: 'localdb' // Put your development database name here, for this project
+        }
+      },
+      mobileurl: '127.0.0.1' // This is the ip address on my laptop in my local network, im using as mobile address because i can access it from my iphone and i leave local host as the desktop one 
+    },
+    production: {
+      database: {
+        client: 'mysql',
+        connection: {
+          host: process.env.DB_HOST,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          database: process.env.DB_NAME
+        }
+      },
+      mobileurl: '10.0.0.178:3000' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
+    },
+    deployment: {
+      apps: [
+        {
+          name : 'nodejs-app',
+          script : 'index.js',
+        }
+      ],
+      deploy: {
+        production: {
+          user: 'deploy',
+          host: '10.0.0.169', //Host is the web server
+          ref: 'origin/master',
+          repo: 'https://github.com/DanMello/first-nodejs-project-login-page.git',
+          path: '/home/deploy/web/nodejs-app',
+          'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v6.11.1/bin/pm2 reload ecosystem.config.js --env production'
+        }
       }
     },
-    mobileurl: '127.0.0.1' // This is the ip address on my laptop in my local network, im using as mobile address because i can access it from my iphone and i leave local host as the desktop one 
-  },
-  production: {
-    database: {
-      client: 'mysql',
-      connection: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-      }
+    bodyParser: {
+      extended: false
     },
-    mobileurl: '10.0.0.178:3000' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
-  },
-  default: {
+    session: {
+      store: application.redisStore,
+      secret: process.env.SESSION_SECRET || 'developmentSession',
+      resave: false,
+      saveUninitialized: false
+    },
     nodemailer: {
       host: 'smtp.gmail.com',
       port: 465,
@@ -34,30 +64,26 @@ const config = {
         user: 'jdanmello@gmail.com', // Your email
         pass: process.env.EMAIL_PASSWORD || 'passwordhere' // You can put password here if you dont want to create a .env file
       }
-    },
-    session: {
-      secret: "secret phrase",
-      resave: false,
-      saveUninitialized: false
     }
   }
+
+  let validators = {
+    customValidators: {
+      notOnlyInt: function (value) {
+
+        return /[a-zA-Z]{1,}/.test(value)
+      },
+      isName: function (value) {
+
+        return /^[a-zA-Z\s]*$/.test(value)
+      }
+    }
+  }
+
+  return {
+    enviroment,
+    settings,
+    validators
+  }
+
 }
-
-exports.enviroment = enviroment
-
-exports.get = function (property) {
-
-  return config[property]
-}
-
-/*Example
-
-const Config = require(./config)
-
-Config.get('enviroment')[property]
-
- or
-
-Config.get(Config.enviroment)[property]
-
-*/

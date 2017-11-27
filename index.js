@@ -7,55 +7,59 @@ const expressValidator = require('express-validator')
 const flash = require('connect-flash')
 const favicon = require('serve-favicon')
 const session = require('express-session')
+const redisStore = require('connect-redis')(session)
 const passport = require('passport')
 
 //Start the app
 const app = express()
 
-//config for the app, env variables
+//Config for the app, env variables
 require('dotenv').config()
 
-const Config = require('./config')
+//Redis session config
+app.redisStore = new redisStore()
+
+//Exporting config
+const Config = require('./config')(app)
 
 app.config = Config
 
 //Database connection
 const knex = require("knex")
-const knexSetup = Config.get(Config.enviroment)['database']
+const knexSetup = require('./knexfile')[Config.enviroment]
 
 app.db = knex(knexSetup)
 
 //Files
 const staticAssets = __dirname + '/public'
 const faviconPath = __dirname + '/public/favicon.ico'
-const validators = require('./customValidators')
 
 //App settings
 app.set('view engine', 'ejs')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded(Config.settings.bodyParser))
 app.use(express.static(staticAssets))
 app.use(favicon(faviconPath))
-app.use(expressValidator({ customValidators: validators }))
-app.use(session(Config.get('default')['session']))
+app.use(expressValidator(Config.validators))
+app.use(session(Config.settings.session))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-//setup passport
+//Setup passport
 require('./passport')(app, passport)
 
-//setup routes
+//Setup routes
 require('./routes')(app, passport)
 
-//adding bcrypt to the app object so i can use it in create user and reset functions
+//Adding bcrypt to the app object so i can use it in create user and reset functions
 app.bcrypt = bcrypt
 
 //Error handler
-app.use(require('./views/pages/http/index').errorHandler)
+app.use(require('./views/pages/http/').errorHandler)
 
 //Utilities
 app.utility = {}
-app.utility.nodemailer = require('./utils/nodemailer/index')
+app.utility.nodemailer = require('./utils/nodemailer/')
 
 app.listen(3000)
