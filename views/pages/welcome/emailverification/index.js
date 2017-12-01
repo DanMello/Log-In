@@ -5,11 +5,15 @@ exports.sendVerificationEmail = function(req, user, done) {
   let emailToken = {
     userid: user.id,
     token: crypto.randomBytes(16).toString('hex'),
-    expires: Date.now() + 86400000
+    expires: Date.now() + 86400000,
+    type: 'verifcationEmail'
   }
 
   return req.app.db('tokens')
-    .where('userid', user.id)
+    .where({
+      userid: user.id,
+      type: 'verifcationEmail'
+    })
     .first()
     .then(token => {
 
@@ -26,7 +30,10 @@ exports.sendVerificationEmail = function(req, user, done) {
       if (token && token.expires < Date.now()) {
 
         return req.app.db('tokens')
-          .where('userid', user.id)
+          .where({
+            userid: user.id,
+            type: 'verifcationEmail'
+          })
           .del()
 
       }
@@ -63,7 +70,10 @@ exports.verify = function(req, res, next) {
   let user
 
   req.app.db('tokens')
-    .where('token', req.params.token)
+    .where({
+      token: req.params.token,
+      type: 'verifcationEmail'
+    })
     .first()
     .then(tokenObj => {
 

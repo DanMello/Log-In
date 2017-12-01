@@ -13,7 +13,7 @@ server {
   }
 
   if ($mobile_rewrite = perform) {
-    rewrite ^/(.*) $scheme://10.0.0.189$request_uri redirect;
+    rewrite ^/(.*) $scheme://10.0.0.189$request_uri;
   }
 
   location / {
@@ -39,4 +39,16 @@ server {
   }
 
 }
+
+
+
+// Important when testing on mobile device make sure your laptop is is on the same connection, 
+  AND when you make changes to the nginx server restart the computer or the whole server 
+
+Example 
+
+wifi 10.0.0.189
+wired 10.0.0.129
+
+if your laptop is wired this configuration wont connect, switch to wifi or change the server to 129 but idk if that works
 

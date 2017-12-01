@@ -19,6 +19,9 @@ require('dotenv').config()
 //Redis session config
 app.redisStore = new redisStore()
 
+//Adding bcrypt to the app object so i can use it in create user and reset functions
+app.bcrypt = bcrypt
+
 //Exporting config
 const Config = require('./config')(app)
 
@@ -51,9 +54,6 @@ require('./passport')(app, passport)
 
 //Setup routes
 require('./routes')(app, passport)
-
-//Adding bcrypt to the app object so i can use it in create user and reset functions
-app.bcrypt = bcrypt
 
 //Error handler
 app.use(require('./views/pages/http/').errorHandler)

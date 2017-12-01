@@ -53,7 +53,9 @@ exports.resendVerificationEmail = function(req, res, next) {
 
         }).then(() => {
 
-          res.render('pages/welcome' + req.filepath + 'resendEmail')
+          res.render('pages/welcome' + req.filepath + 'resentEmail', {
+            email: req.body.email
+          })
 
         }).catch(err => {
 

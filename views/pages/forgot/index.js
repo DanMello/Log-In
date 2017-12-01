@@ -1,27 +1,3 @@
-function checkToken (user) {
-
-  if (!user) {
-
-    let tokenNotFoundError = new Error('Token not found')
-
-    tokenNotFoundError.status = 404
-
-    throw tokenNotFoundError
-
-  }
-
-  if (user.resetPasswordExpires < Date.now()) {
-
-    let tokenExpired = new Error('Password reset token has expired')
-
-    tokenExpired.status = 404
-
-    throw tokenExpired
-
-  }
-
-}
-
 exports.init = function (req, res) {
 
   res.render('pages/forgot' + req.filepath, {
@@ -49,7 +25,12 @@ exports.forgotAccount = function (req, res, next) {
     } else {
 
 	  let crypto = require('crypto')
-	  let passwordToken
+
+    let passwordToken = {
+        token: crypto.randomBytes(16).toString('hex'),
+        expires: Date.now() + 86400000,
+        type: 'passwordResetToken'
+      }
 
       return req.app.db('users')
         .where('email', req.body.email)
@@ -83,18 +64,43 @@ exports.forgotAccount = function (req, res, next) {
 
           }
 
-          passwordToken = {
-            token: crypto.randomBytes(16).toString('hex'),
-            expires: Date.now() + 86400000
+          passwordToken.userid = user.id
+
+          return req.app.db('tokens')
+            .where({
+              userid: user.id,
+              type: 'passwordResetToken'
+            })
+            .first()
+
+
+        }).then(token => {
+
+          if (token && token.expires > Date.now()) {
+
+            let tokenNotExpiredError = new Error("Your password reset token has not yet expired, please check your email")
+
+            tokenNotExpiredError.status = 400
+
+            throw tokenNotExpiredError
+
           }
 
-          return req.app.db('users')
-            .where('email', req.body.email)
-            .first()
-            .update({
-              resetPasswordToken: passwordToken.token,
-              resetPasswordExpires: passwordToken.expires
-            })
+          if (token && token.expires < Date.now()) {
+
+            return req.app.db('tokens')
+              .where({
+                userid: user.id,
+                type: 'passwordResetToken'
+              })
+              .del()
+
+          }
+
+        }).then(() => {
+
+          return req.app.db('tokens')
+            .insert(passwordToken)
 
         }).then(result => {
 
@@ -141,12 +147,40 @@ exports.forgotAccount = function (req, res, next) {
 
 exports.verify = function (req, res, next) {
 
-  req.app.db('users')
-    .where('resetPasswordToken', req.params.token)
+  req.app.db('tokens')
+    .where({
+      token: req.params.token,
+      type: 'passwordResetToken'
+    })
     .first()
-    .then(user => {
+    .then(token => {
 
-      return checkToken(user)
+      if (!token) {
+
+        let tokenNotFoundError = new Error('Token not found')
+
+        tokenNotFoundError.status = 404
+
+        throw tokenNotFoundError
+
+      }
+
+      if (token.expires < Date.now()) {
+
+        req.app.db('tokens')
+          .where({
+            token: token,
+            type: 'passwordResetToken'
+          })
+          .del()
+
+        let tokenExpired = new Error('Password reset token has expired')
+
+        tokenExpired.status = 404
+
+        throw tokenExpired
+
+      }
 
     }).then(() => {
 
@@ -165,18 +199,44 @@ exports.verify = function (req, res, next) {
 
 exports.resetPassword = function (req, res, next) {
 
-  let userEmail
-
-  req.app.db('users')
-    .where('resetPasswordToken', req.params.token)
+  let userReference = {}
+  
+  req.app.db('tokens')
+    .where({
+      token: req.params.token,
+      type: 'passwordResetToken'
+    })
     .first()
-    .then(user => {
+    .then(token => {
 
-      if (!user) throw new Error('Password reset token expired or invalid')
+      if (!token) {
 
-      userEmail = user.email
+        let tokenNotFoundError = new Error('Token not found')
 
-      return checkToken(user)
+        tokenNotFoundError.status = 404
+
+        throw tokenNotFoundError
+
+      }
+
+      if (token.expires < Date.now()) {
+
+        req.app.db('tokens')
+          .where({
+            token: token,
+            type: 'passwordResetToken'
+          })
+          .del()
+
+        let tokenExpired = new Error('Password reset token has expired')
+
+        tokenExpired.status = 404
+
+        throw tokenExpired
+
+      }
+
+      userReference.userId = token.userid
 
     }).then(() => {
 
@@ -201,12 +261,19 @@ exports.resetPassword = function (req, res, next) {
       }
 
       return req.app.db('users')
-        .where('resetPasswordToken', req.params.token)
+        .where('id', userReference.userId)
         .first()
+
+    }).then(user => {
+
+      if (!user) throw new Error('Something went wrong trying to change password please try again')
+
+      userReference.email = user.email
+
+      return req.app.db('users')
+        .where('id', userReference.userId)
         .update({
-          password: req.app.bcrypt.hashSync(req.body.password),
-          resetPasswordToken: null,
-          resetPasswordExpires: null
+          password: req.app.bcrypt.hashSync(req.body.password)
         })
 
     }).then(result => {
@@ -221,18 +288,32 @@ exports.resetPassword = function (req, res, next) {
 
       }
 
-      let emailMessage = 
-        `Your password has been changed.\n\n
-         If this was not you, that means someone else has access to your email.\n\n
-         We recomend changing your email password, then chaging your password in our app.\n\n
-         However if this you, this email is just to confirm of your password reset.
-        `
-      return req.app.utility.nodemailer({
-        from: '"Dans App" <jdanmello@gmail.com>',
-        to: userEmail,
-        subject: 'Your password has been reset',
-        message: emailMessage
-      })
+      return req.app.db('tokens')
+        .where({
+          token: req.params.token,
+          type: 'passwordResetToken'
+        })
+        .del()
+
+      }).then(result => {
+
+        if (!result) {
+
+          console.log("There was a problem deleting password reset token", req.params.token)
+        }
+
+        let emailMessage = 
+          `Your password has been changed.\n\n
+           If this was not you, that means someone else has access to your email.\n\n
+           We recomend changing your email password, then chaging your password in our app.\n\n
+           However if this you, this email is just to confirm of your password reset.
+          `
+        return req.app.utility.nodemailer({
+          from: '"Dans App" <jdanmello@gmail.com>',
+          to: userReference.email,
+          subject: 'Your password has been reset',
+          message: emailMessage
+        })
 
     }).then(() => {
 

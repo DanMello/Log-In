@@ -1,7 +1,5 @@
 function ensureAuthenticated (req, res, next) {
 
-  console.log(req.isAuthenticated())
-
   if (req.isAuthenticated()) {
 
     return next()
@@ -72,6 +70,8 @@ function checkDevice (req, res, next) {
 
   let url = req.app.config.settings[req.app.config.enviroment].mobileurl
 
+  console.log(req.headers.host)
+
   if (req.headers.host === url) {
 
     req.filepath = '/mobile/'
@@ -107,6 +107,7 @@ exports = module.exports = function(app, passport) {
     app.post('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').resendVerificationEmail)
 
     //Forgot account?
+    app.all('/forgot*', ensureSignedOut)
     app.get('/forgot', require('./views/pages/forgot').init)
     app.get('/forgot/:token', require('./views/pages/forgot').verify)
     app.post('/forgot', require('./views/pages/forgot').forgotAccount)
@@ -122,6 +123,7 @@ exports = module.exports = function(app, passport) {
     app.post('/alternate/signup', require('./views/pages/signup').signup)
 
     //social sign up
+    app.all('/signup*', ensureSignedOut)
     app.get('/signup/github/', passport.authenticate('github', { scope: ['user:email'] }))
     app.get('/signup/github/callback/', require('./views/pages/signup/index').signupGitHub)
 
@@ -133,9 +135,19 @@ exports = module.exports = function(app, passport) {
     app.all('/', ensureVerified)
     app.get('/', require('./views/pages/home').init)
 
+    //Profile page
+    app.all('/account*', ensureAuthenticated)
+    app.all('/account*', ensureVerified)
+    app.get('/account/profile/:username', require('./views/pages/profile').init)
+    app.get('/account/settings/:username', require('./views/pages/settings').init)
+    app.post('/account/settings/changeEmail', require('./views/pages/settings').changeEmail)
+
     //test route
     app.get('/test', (req, res, next) => {
-      res.render('pages/forgot/passwordReset')
+      res.render('pages/welcome/emailverification/mobile/resentEmail', {
+        email: 'jdanmello@gmail.com',
+        error: []
+      })
     })
 
 }

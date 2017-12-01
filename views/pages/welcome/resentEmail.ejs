@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Verified</title>
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerNotVerified.css">
+
+<style>
+#statement {
+  font-size: 20px;
+  margin-top: 10px;
+}
+#email {
+  font-style: italic;
+  color: blue;
+}
+</style>
+</head>
+<body>
+
+<% include ../../partials/header %>
+
+<div id="mainContainer">
+
+  <div id="subContainer">
+
+    <h1>All set</h1>
+
+    <p id="statement">We have sent another email to <span id="email"><%= email %></span> with instructions on how to verify your account.</p>
+
+  </div>
+
+</div>
+
+<% include ../../partials/footer %> 
+
+</body>
+</html>

@@ -13,3 +13,5 @@ exports.seed = function (knex, Promise) {
     })
 }
 
+//This just creates two users using the same email one which is already verified and one who is not to test the email functions
+

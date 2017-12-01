@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       userid int(11) NOT NULL,
       token varchar(255) DEFAULT NULL,
       expires varchar(255) DEFAULT NULL,
+      type varchar(255) DEFAULT NULL,
       KEY fk_user_id (userid),
       CONSTRAINT fk_user_id FOREIGN KEY (userid) REFERENCES users (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
