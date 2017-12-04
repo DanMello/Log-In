@@ -100,7 +100,7 @@ exports = module.exports = function(app, passport) {
     //logout
     app.get('/logout', require('./views/pages/login').logout)
 
-    // Verification routes
+    // Verification routes  
     app.get('/account/skipVerification/:id', require('./views/pages/welcome').skipVerification)
     app.get('/account/verification/:token', require('./views/pages/welcome/emailverification').verify)
     app.get('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').init)
@@ -141,12 +141,16 @@ exports = module.exports = function(app, passport) {
     app.get('/account/profile/:username', require('./views/pages/profile').init)
     app.get('/account/settings/:username', require('./views/pages/settings').init)
     app.post('/account/settings/changeEmail', require('./views/pages/settings').changeEmail)
+    app.get('/account/settings/changeEmail/:email/:token', require('./views/pages/settings').verify)
+    app.post('/account/settings/changeUserName', require('./views/pages/settings').changeUserName)
+    app.post('/account/settings/changePassword', require('./views/pages/settings').changePassword)
 
     //test route
     app.get('/test', (req, res, next) => {
-      res.render('pages/welcome/emailverification/mobile/resentEmail', {
-        email: 'jdanmello@gmail.com',
-        error: []
+      res.render('pages/emails/emailChanged', {
+        imgurl: '/images/default.png',
+        username: "jdanmello",
+        email: 'dan-mello@gmail.com'
       })
     })
 

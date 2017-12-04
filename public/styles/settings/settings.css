@@ -1,0 +1,120 @@
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+  min-height: 712px;
+}
+#subContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 805px;
+}
+#subContainer hr {
+  margin-top: 10px;
+}
+#emailForm, #UsernameForm, #PasswordForm {
+  padding: 10px;
+}
+.inputContainers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.inputContainers label {
+  font-size: 20px;
+}
+.inputContainers input {
+  font-size: 20px;
+  padding: 2px;
+}
+.inputContainers * {
+  flex: 1;
+}
+.formLines {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; 
+}
+.editLabels {
+  font-weight: bold;
+  font-size: 20px;
+}
+.editValues {
+  font-size: 20px;
+  flex-basis: 10%;
+}
+.editButtonContainer {
+  padding: 2px;
+  color: #365899;
+  text-align: right;
+}
+.editbutton {
+  cursor: pointer;
+  font-size: 20px;
+}
+.newInputContainer {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+}
+.newLabel {
+  font-style: italic;
+  font-size: 20px;
+}
+.newValue {
+  padding: 2px;
+}
+.newButtonContainer {
+  display: flex;
+}
+.newPasswordButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.newInputContainer input, .newInputContainer div {
+  margin-top: 10px;
+}
+.newInputContainer input {
+  font-size: 18px;
+}
+.newButton, .hideMenu {
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  background: #5b88e8;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+.hideMenu {
+  margin-left: 5px;
+  background: silver;
+}
+.hidden {
+  display: none;
+}
+.disabled {
+  opacity: .2;
+  cursor: default;
+}
+#box {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+}
+#bottomLine {
+  margin-bottom: 10px;
+}
+#error {
+  color: red;
+  margin-top: 10px;
+}
+#success {
+  color: #3CB371;
+  margin-top: 10px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerVerified.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+  min-height: 712px;
+}
+#subContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 805px;
+}
+#subContainer h1 {
+  margin-top: 20px;
+}
+#email {
+  color: blue;
+  font-style: italic;
+}
+.mainText {
+  font-size: 20px;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+  <% include ../../partials/header %>
+
+  <div id="mainContainer">
+
+    <div id="subContainer">
+
+      <h1>Email Changed</h1>
+
+      <p class="mainText">All done, your email has been updated to <span id="email"><%= email %></span></p>
+
+      <p class="mainText">To return home or to login <a href="/">Click here</a></p>
+      
+    </div>
+    
+  </div>
+
+</body>
+</html>
