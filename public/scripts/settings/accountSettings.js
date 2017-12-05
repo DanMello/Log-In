@@ -1,22 +1,28 @@
+//views/pages/settings/index.ejs  <-- Where this is being used
 let settingsModule = (function () {
 
-  let subContainer = document.querySelector('#subContainer');
+  //DOM reference to be reused for all query selections
+  let subContainer = document.querySelector('#subContainer')
+  
+  //Edit and cancel buttons events
+  let buttons = subContainer.querySelectorAll('.editbutton').forEach(button => button.addEventListener('click', showMenu))
+  let cancelButton = subContainer.querySelectorAll('.hideMenu').forEach(button => button.addEventListener('click', hideMenu))
+  
+  //Submit buttons for each form 
+  let changeEmailButton = subContainer.querySelector('#changeEmail')
+  let changeUsernameButton = subContainer.querySelector('#changeUsername')
+  let changePasswordButton = subContainer.querySelector('#passwordButton')
 
-  let buttons = subContainer.querySelectorAll('.editbutton').forEach(button => {
+  //Events
+  changePasswordButton.addEventListener('click', changePassword)
+  changeUsernameButton.addEventListener('click', changeUserName)
+  changeEmailButton.addEventListener('click', changeEmail)
 
-    button.addEventListener('click', showMenu)
-
-  })
-
-  let cancelButton = subContainer.querySelectorAll('.hideMenu').forEach(button => {
-
-    button.addEventListener('click', hideMenu)
-
-  })
-
+  //Arrays to track progress
   let activeContainer = []
   let existingElements = []
 
+  //Functions
   function showMenu () {
 
     if (this.classList.contains('disabled')) return false
@@ -92,11 +98,6 @@ let settingsModule = (function () {
     activeContainer.pop()
   }
 
-  let changeEmailButton = subContainer
-    .querySelector('#changeEmail')
-
-  changeEmailButton.addEventListener('click', changeEmail)
-
   function changeEmail (e) {
 
     e.preventDefault()
@@ -164,11 +165,6 @@ let settingsModule = (function () {
 
   }
 
-  let changeUsernameButton = subContainer
-    .querySelector('#changeUsername')
-
-  changeUsernameButton.addEventListener('click', changeUserName)
-
   function changeUserName (e) {
 
     e.preventDefault()
@@ -222,11 +218,6 @@ let settingsModule = (function () {
     })
 
   }
-
-  let changePasswordButton = subContainer
-    .querySelector('#passwordButton')
-
-  changePasswordButton.addEventListener('click', changePassword)
 
   function changePassword (e) {
 

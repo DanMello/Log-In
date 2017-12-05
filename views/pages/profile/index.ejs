@@ -6,6 +6,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+  min-height: 612px;
+}
+#subContainer {
+  background: white; 
+  max-width: 1000px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
 </style>
 </head>
@@ -13,8 +25,51 @@
 
   <% include ../../partials/verifiedHeader %>
 
-  <div>Hello <%= username %></div>
+  <div id="mainContainer">
 
+    <div id="subContainer">
+
+      <div style="border-radius: 10px; display: flex; flex-direction: column;">
+        <div style="position: relative; min-width: 1000px;">
+          <img src="/images/background.jpg" style="border-top-right-radius: 10px;border-top-left-radius: 10px;height:300px;position: absolute;width: 100%;object-fit: cover;top: 0">
+            <img src="/images/dan.JPG" style="margin-top:150px;margin-left: 20px;height: 200px; width: 200px; border-radius: 25%; object-fit: cover; transform: rotate(90deg);">
+          <div style="display: flex;padding: 0px 20px 0px 20px;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 22px; font-weight: bold; margin-top: 10px;"><%= fullname %></span>
+              <span style="font-size: 20px; margin-top: 10px;">Github: <a id="github" style="color: blue; font-style: italic;" href="https://github.com/DanMello">DanMello</a></span>
+              <span style="font-size: 20px; margin-top: 10px;">Email: <%= email %></span>
+              <span style="font-size: 20px; margin-top: 10px;">Location: Rockland, MA</span>
+            </div>
+            <div style="flex-grow: 1;align-self: flex-end;">
+              <nav>
+                <ul style="display: flex;list-style-type: none;justify-content: space-around;">
+                  <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+                    <a style="text-decoration: none; color: black;" href="/account/profile/jdanmello">Profile</a>
+                  </li>
+                  <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+                    <a style="text-decoration: none; color: black;" href="/account/resume/jdanmello">Resume</a>
+                  </li>
+                  <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+                    <a style="text-decoration: none; color: black;" href="/account/documentation/jdanmello">Documentation</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <hr style="margin-top: 20px;display: block;height: 1px;border: 0;border-top: 1px solid #ccc;">
+      </div>
+
+<!--       <p style="margin-top: 20px;">ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+
+    </div>
+    
+  </div>
 
 </body>
 </html>
