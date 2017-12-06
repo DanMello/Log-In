@@ -101,8 +101,8 @@ exports = module.exports = function(app, passport) {
     // Verification routes  
     app.get('/account/skipVerification/:id', require('./views/pages/welcome').skipVerification)
     app.get('/account/verification/:token', require('./views/pages/welcome/emailverification').verify)
-    app.get('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').init)
-    app.post('/account/resendEmail', require('./views/pages/welcome/emailverification/resendEmail').resendVerificationEmail)
+    app.get('/account/resendEmail', ensureSignedOut, require('./views/pages/welcome/emailverification/resendEmail').init)
+    app.post('/account/resendEmail', ensureSignedOut, require('./views/pages/welcome/emailverification/resendEmail').resendVerificationEmail)
 
     //Forgot account?
     app.all('/forgot*', ensureSignedOut)
@@ -134,14 +134,18 @@ exports = module.exports = function(app, passport) {
     app.get('/', require('./views/pages/home').init)
 
     //Profile page
-    app.all('/account*', ensureAuthenticated)
-    app.all('/account*', ensureVerified)
     app.get('/account/profile/:username', require('./views/pages/profile').init)
+
+    //Settings Page
+    app.all('/account/settings*', ensureAuthenticated)
+    app.all('/account/settings*', ensureVerified)
     app.get('/account/settings/:username', require('./views/pages/settings').init)
     app.post('/account/settings/changeEmail', require('./views/pages/settings').changeEmail)
     app.get('/account/settings/changeEmail/:email/:token', require('./views/pages/settings').verify)
     app.post('/account/settings/changeUserName', require('./views/pages/settings').changeUserName)
     app.post('/account/settings/changePassword', require('./views/pages/settings').changePassword)
+    app.post('/account/settings/addGithubAccount', require('./views/pages/settings').addGithubAccount)
+    app.post('/account/settings/addLocation', require('./views/pages/settings').addLocation)
 
     //test route
     app.get('/test', (req, res, next) => {

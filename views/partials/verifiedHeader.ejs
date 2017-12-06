@@ -1,3 +1,4 @@
+<html>
 <header style="display: flex;background: lightslategray;height: 100px;justify-content: space-around">
   
   <a href="/" style="display: block;text-decoration: none;align-self: center">  
@@ -9,14 +10,14 @@
       <li><a style="text-decoration: none; color: white;font-size: 20px;" href="/">Home</a></li>
       <li class="navButton" style="margin-left: 20px;">
         <div style="display: flex; align-items: center;color: white;cursor: default;">
-          <img src="<%= imgurl %>" style="height: 24px;width: 24px;border-radius: 50%;">
+          <img src="<%= page.imgurl %>" style="height: 24px;width: 24px;border-radius: 50%;">
           <span style="font-size: 20px;margin-left: 10px">Account</span>
           <i style="font-size: 18px;margin-left: 10px" class="fa fa-caret-down" aria-hidden="true"></i>
         </div>
 
         <ul class="dropDown">
-          <li><a style="font-size: 18px;" href="/account/profile/<%= username %>"><i style="font-size: 20px; padding-right: 10px;color: darkgrey;vertical-align: middle;" class="fa fa-user" aria-hidden="true"></i>Profile</a></li>
-          <li><a style="font-size: 18px;" href="/account/settings/<%= username %>"><i style="font-size: 20px; padding-right: 10px;color: darkgrey;vertical-align: middle;" class="fa fa-cog" aria-hidden="true"></i>Settings</a></li>
+          <li><a style="font-size: 18px;" href="/account/profile/<%= page.username %>"><i style="font-size: 20px; padding-right: 10px;color: darkgrey;vertical-align: middle;" class="fa fa-user" aria-hidden="true"></i>Profile</a></li>
+          <li><a style="font-size: 18px;" href="/account/settings/<%= page.username %>"><i style="font-size: 20px; padding-right: 10px;color: darkgrey;vertical-align: middle;" class="fa fa-cog" aria-hidden="true"></i>Settings</a></li>
           <li><a style="font-size: 18px;" href="/logout"><i style="font-size: 20px; padding-right: 10px;color: darkgrey;vertical-align: middle;" class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li>
         </ul>
 

@@ -22,11 +22,11 @@
 
       <hr>
 
-      <form id="emailForm" action="/account/settings/changeEmail" method="POST">
+      <form id="changeEmail" class="formsContainer" action="/account/settings/changeEmail" method="POST">
 
         <div class="inputContainers">
           <div class="editLabels">Email</div>
-          <div class="editValues"><%= email %></div>
+          <div class="editValues"><%= userObj.email %></div>
           <div class="editButtonContainer"><span class="editbutton">Edit</span></div>
         </div>
 
@@ -34,9 +34,9 @@
             <div class="newLabel">New email:</div>
             <input class="newValue" type="text" name="email">
             <div class="newLabel">Current Password:</div>
-            <input class="newValue" type="password" name="emailPassword">
+            <input class="newValue" type="password" name="password">
           <div class="newPasswordButtonContainer">
-            <input id="changeEmail" class="newButton" type="submit" name="submit" value="Change Email">
+            <input class="newButton" type="submit" name="submit" value="Change Email">
             <div class="hideMenu">Cancel</div>
           </div>
         </div>
@@ -45,11 +45,11 @@
 
       <hr class="formLines">
 
-      <form id="UsernameForm">
+      <form id="changeUserName" class="formsContainer">
         
         <div class="inputContainers">
           <div class="editLabels">Username</div>
-          <div class="editValues"><%= username %></div>
+          <div class="editValues"><%= userObj.username %></div>
           <div class="editButtonContainer"><span class="editbutton">Edit</span></div>
         </div>
 
@@ -57,9 +57,9 @@
           <div class="newLabel">New Username:</div>
           <input class="newValue" type="text" name="username">
           <div class="newLabel">Current Password:</div>
-          <input class="newValue" type="password" name="usernamePassword">
+          <input class="newValue" type="password" name="password">
           <div class="newPasswordButtonContainer">
-            <input id="changeUsername" class="newButton" type="submit" name="submit" value="Change Username">
+            <input class="newButton" type="submit" name="submit" value="Change Username">
             <div class="hideMenu">Cancel</div>
           </div>
         </div>
@@ -68,7 +68,56 @@
 
       <hr class="formLines">
 
-      <form id="PasswordForm">
+      <form id="addGithubAccount" class="formsContainer">
+
+        <div class="inputContainers">
+          <div class="editLabels">Github</div>
+          <div class="editValues"><%= userObj.github.username || 'Have github?' %></div>
+          <div class="editButtonContainer"><span class="editbutton">Edit</span></div>
+        </div>
+
+        <div class="newInputContainer hidden">
+          <p class="editValues">We use this to create a link on your profile.</p>
+          <div class="newLabel">Github username:</div>
+          <input class="newValue" type="text" name="githubUsername" value="<%= userObj.github.username %>">
+          <div class="newLabel">Github account link:</div>
+          <input class="newValue" type="text" name="githubLink" value="<%= userObj.github.link %>" placeholder="https://github.com/username">
+          <div class="newLabel">Current Password (not your github password):</div>
+          <input class="newValue" type="password" name="password">
+          <div class="newPasswordButtonContainer">
+            <input class="newButton" type="submit" name="submit" value="Add github">
+            <div class="hideMenu">Cancel</div>
+          </div>
+        </div>
+
+      </form>
+
+      <hr class="formLines">
+
+      <form id="addLocation" class="formsContainer">
+        
+        <div class="inputContainers">
+          <div class="editLabels">Location</div>
+          <div class="editValues"><%= userObj.location || 'Add Location' %></div>
+          <div class="editButtonContainer"><span class="editbutton">Edit</span></div>
+        </div>
+
+        <div class="newInputContainer hidden">
+          <div class="newLabel">Location:</div>
+          <input class="newValue" type="text" name="location" placeholder="Boston, MA">
+          <div class="newLabel">Current Password:</div>
+          <input class="newValue" type="password" name="password">
+          <div class="newPasswordButtonContainer">
+            <input class="newButton" type="submit" name="submit" value="Add Location">
+            <div class="hideMenu">Cancel</div>
+          </div>
+        </div>
+
+      </form>
+
+      <hr class="formLines">
+
+      <form id="changePassword" class="formsContainer">
         
         <div class="inputContainers">
           <div class="editLabels">Password</div>
@@ -84,7 +133,7 @@
           <div class="newLabel">Repeat New Password:</div>
           <input class="newValue" type="password" name="passwordValueTwo">
           <div class="newPasswordButtonContainer">
-            <input id="passwordButton" class="newButton" type="submit" name="submit" value="Change Password">
+            <input class="newButton" type="submit" name="submit" value="Change Password">
             <div class="hideMenu">Cancel</div>
           </div>
         </div>

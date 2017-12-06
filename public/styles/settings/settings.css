@@ -13,7 +13,7 @@
 #subContainer hr {
   margin-top: 10px;
 }
-#emailForm, #UsernameForm, #PasswordForm {
+.formsContainer {
   padding: 10px;
 }
 .inputContainers {

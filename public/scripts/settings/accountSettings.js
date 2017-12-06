@@ -7,16 +7,9 @@ let settingsModule = (function () {
   //Edit and cancel buttons events
   let buttons = subContainer.querySelectorAll('.editbutton').forEach(button => button.addEventListener('click', showMenu))
   let cancelButton = subContainer.querySelectorAll('.hideMenu').forEach(button => button.addEventListener('click', hideMenu))
-  
-  //Submit buttons for each form 
-  let changeEmailButton = subContainer.querySelector('#changeEmail')
-  let changeUsernameButton = subContainer.querySelector('#changeUsername')
-  let changePasswordButton = subContainer.querySelector('#passwordButton')
 
-  //Events
-  changePasswordButton.addEventListener('click', changePassword)
-  changeUsernameButton.addEventListener('click', changeUserName)
-  changeEmailButton.addEventListener('click', changeEmail)
+  //Submit buttons for each form 
+  let submitButtons = subContainer.querySelectorAll('.newButton').forEach(button => button.addEventListener('click', editProfile))
 
   //Arrays to track progress
   let activeContainer = []
@@ -77,8 +70,6 @@ let settingsModule = (function () {
 
   function hideMenu () {
 
-    console.log(existingElements)
-
     let hideThisContainer = this.parentElement
 
     while (!hideThisContainer.classList.contains('showing')) {
@@ -98,113 +89,56 @@ let settingsModule = (function () {
     activeContainer.pop()
   }
 
-  function changeEmail (e) {
+  function editProfile (e) {
 
     e.preventDefault()
 
-    changeEmailButton.disabled = true
-    changeEmailButton.style.opacity = '.3'
+    this.disabled = true
+    this.style.opacity = '.3'
 
-    let emailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let parentForm = this.parentElement
 
-    let email = subContainer
-      .querySelector('input[name="email"]')
-      .value
+    while (parentForm.tagName !== 'FORM') {
 
-    let password = subContainer
-      .querySelector('input[name="emailPassword"')
-      .value
+      parentForm = parentForm.parentElement
+    }
 
-    if (!emailTest.test(email)) {
+    let inputList = parentForm.querySelectorAll('input[type="text"], input[type="password"')
 
-      let responseHanlderFunction = responseHanlder.bind(this)
+    let inputArrayFromList = Array.from(inputList).reduce((inputObj, input) => {
 
-      responseHanlderFunction('Please enter a valid email*', 'error')
+      inputObj[input.name] = input.value
 
-      changeEmailButton.disabled = false
-      changeEmailButton.style.opacity = '1'
+      return inputObj
 
-    } else {
+    }, {})
 
-      fetch('http://localhost/account/settings/changeEmail', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, 
-        credentials: 'include',
-        body: JSON.stringify({
-          email,
-          password
-        })
-      }).then(res => {
+    fetch('http://localhost/account/settings/' + parentForm.id, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }, 
+      credentials: 'include',
+      body: JSON.stringify(inputArrayFromList)
+    }).then(res => {
 
-        return res.json()
+      return res.json()
 
-      }).then(resJson => {
+    }).then(resJson => {
 
-        if (resJson.error) throw new Error(resJson.message)
-        if (resJson.success) {
+      if (resJson.error) throw new Error(resJson.message)
+      if (resJson.success) {
 
-          let responseHanlderFunction = responseHanlder.bind(this)
+        let responseHanlderFunction = responseHanlder.bind(this)
 
-          responseHanlderFunction(resJson.message, 'success')
+        responseHanlderFunction(resJson.message, 'success')
+
+        if (parentForm.id !== 'changeEmail') {
+
+          setTimeout(function(){ location.reload() }, 5000)
         }
 
-      }).catch(err => {
-
-        let responseHanlderFunction = responseHanlder.bind(this)
-
-        responseHanlderFunction(err.message, 'error')
-
-        changeEmailButton.disabled = false
-        changeEmailButton.style.opacity = '1'
-      })
-
-    } 
-
-  }
-
-  function changeUserName (e) {
-
-    e.preventDefault()
-
-    changeUsernameButton.disabled = true
-    changeUsernameButton.style.opacity = '.3'
-
-    let username = subContainer
-      .querySelector('input[name="username"]')
-      .value
-
-    let password = subContainer
-      .querySelector('input[name="usernamePassword"')
-      .value
-
-    fetch('http://localhost/account/settings/changeUserName', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }, 
-      credentials: 'include',
-      body: JSON.stringify({
-        username,
-        password
-      })
-    }).then(res => {
-
-      return res.json()
-
-    }).then(resJson => {
-
-      if (resJson.error) throw new Error(resJson.message)
-      if (resJson.success) {
-
-        let responseHanlderFunction = responseHanlder.bind(this)
-
-        responseHanlderFunction(resJson.message, 'success')
-
-        setTimeout(function(){ location.reload() }, 5000)
       }
 
     }).catch(err => {
@@ -213,67 +147,8 @@ let settingsModule = (function () {
 
       responseHanlderFunction(err.message, 'error')
 
-      changeUsernameButton.disabled = false
-      changeUsernameButton.style.opacity = '1'
-    })
-
-  }
-
-  function changePassword (e) {
-
-    e.preventDefault()
-
-    changePasswordButton.disabled = true
-    changePasswordButton.style.opacity = '.3'
-
-    let currentPassword = subContainer
-      .querySelector('input[name="currentpassword"]')
-      .value
-
-    let passwordOne = subContainer
-      .querySelector('input[name="passwordValueOne"')
-      .value
-
-    let passwordTwo = subContainer
-      .querySelector('input[name="passwordValueTwo"')
-      .value
-
-    fetch('http://localhost/account/settings/changePassword', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }, 
-      credentials: 'include',
-      body: JSON.stringify({
-        currentPassword,
-        passwordOne,
-        passwordTwo
-      })
-    }).then(res => {
-
-      return res.json()
-
-    }).then(resJson => {
-
-      if (resJson.error) throw new Error(resJson.message)
-      if (resJson.success) {
-
-        let responseHanlderFunction = responseHanlder.bind(this)
-
-        responseHanlderFunction(resJson.message, 'success')
-
-        setTimeout(function(){ location.reload() }, 5000)
-      }
-
-    }).catch(err => {
-
-      let responseHanlderFunction = responseHanlder.bind(this)
-
-      responseHanlderFunction(err.message, 'error')
-
-      changePasswordButton.disabled = false
-      changePasswordButton.style.opacity = '1'
+      this.disabled = false
+      this.style.opacity = '1'
     })
 
   }

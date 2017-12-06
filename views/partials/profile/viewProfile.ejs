@@ -1,0 +1,39 @@
+<div style="border-radius: 10px; display: flex; flex-direction: column;">
+  <div style="position: relative; min-width: 1000px;">
+    <img src="<%= userObj.coverphoto %>" style="border-top-right-radius: 10px;border-top-left-radius: 10px;height:300px;position: absolute;width: 100%;object-fit: cover;top: 0">
+    <img src="<%= userObj.profilepic %>" style="margin-top:150px;margin-left: 20px;height: 200px; width: 200px; border-radius: 25%; object-fit: cover;position: relative;">
+    <div style="display: flex;padding: 0px 20px 0px 20px;">
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 22px; font-weight: bold; margin-top: 10px;"><%= userObj.fullname %></span>
+        <span style="font-size: 20px; margin-top: 10px;order: 1">Email: <%= userObj.email %></span>
+        <% userObj.information.forEach(item => { %>
+          <% for (const prop in item) { %>
+            <% if (!!item[prop] && (prop === 'github')) {%>
+              <% if (!!item[prop].link && !!item[prop].username) {%>
+                <span style="font-size: 20px; margin-top: 10px;order: 0;"><%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <a style="color: blue; font-style: italic;" href="<%= item[prop].link %>"><%= item[prop].username %></a></span>
+              <% } %>
+            <% } else if (!!item[prop] && (prop !== 'github')) { %>
+              <span style="font-size: 20px; margin-top: 10px;order: 2"><%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <%= item[prop] %></span>
+            <% } %>
+          <% } %>
+        <% }) %>
+      </div>
+      <div style="flex-grow: 1;align-self: flex-end;">
+        <nav>
+          <ul style="display: flex;list-style-type: none;justify-content: space-around;">
+            <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+              <a style="text-decoration: none; color: #3366FF;" href="/account/profile/<%= userObj.username %>">Profile</a>
+            </li>
+            <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+              <a style="text-decoration: none; color: lightslategray;" href="/account/resume/<%= userObj.username %>">Resume</a>
+            </li>
+            <li class="navLinks" style="font-size: 20px;font-weight: bold;cursor: pointer;">
+              <a style="text-decoration: none; color: lightslategray;" href="/account/documentation/<%= userObj.username %>">Documentation</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <hr style="margin-top: 20px;display: block;height: 1px;border: 0;border-top: 1px solid #ccc;">
+</div>

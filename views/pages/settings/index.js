@@ -1,11 +1,45 @@
 exports.init = function (req, res, next) {
-  
-  res.render('pages/settings' + req.filepath, {
-    username: req.user.username,
-    email: req.user.email,
-    imgurl: req.user.profilepic || '/images/default.png'
-  })
 
+  req.app.db('users')
+    .where('username', req.params.username)
+    .first()
+    .then(user => {
+
+      if (!user) throw new Error('User not found.')
+      if (!req.user.id === user.id) {
+        
+        throw new Error('Invalid request')
+
+      } else {
+
+        let userObj = {
+          fullname: user.fullname,
+          email: user.email,
+          username: user.username,
+          profilepic: user.profilepic || '/images/default.png',
+          coverphoto: user.coverphoto || '/images/defaultcover.jpeg',
+          github: { 
+            link: user.githublink, 
+            username: user.githubusername
+          },
+          location: user.location
+        }
+
+        res.render('pages/settings' + req.filepath, {
+          userObj,
+          page: {
+            username: userObj.username,
+            imgurl: userObj.profilepic
+          }
+        })
+
+      }
+
+    }).catch(err => {
+
+      next(err)
+
+    })
 }
 
 exports.changeEmail = function (req, res, next) {
@@ -205,10 +239,10 @@ exports.changeUserName = function (req, res, next) {
 
 exports.changePassword = function (req, res, next) {
 
-  req.assert('currentPassword', 'Password requires 6 to 20 characters').len(6, 20)
-  req.assert('passwordOne', 'Password requires 6 to 20 characters').len(6, 20)
-  req.assert('passwordTwo', 'Password requires 6 to 20 characters').len(6, 20)
-  req.assert('passwordTwo', 'New Passwords do not match').equals(req.body.passwordOne)
+  req.assert('currentpassword', 'Password requires 6 to 20 characters').len(6, 20)
+  req.assert('passwordValueOne', 'Password requires 6 to 20 characters').len(6, 20)
+  req.assert('passwordValueTwo', 'Password requires 6 to 20 characters').len(6, 20)
+  req.assert('passwordValueTwo', 'New Passwords do not match').equals(req.body.passwordValueOne)
 
   req.getValidationResult().then(result => {
 
@@ -229,14 +263,14 @@ exports.changePassword = function (req, res, next) {
         .then(user => {
 
           if (!user) throw new Error('Something went wrong, we could not find your account')
-          if (!req.app.bcrypt.compareSync(req.body.currentPassword, user.password)) throw new Error('The current password you entered does not match our records.')
-          if (req.app.bcrypt.compareSync(req.body.passwordOne, user.password)) throw new Error('Please use a different password than your current one.')
+          if (!req.app.bcrypt.compareSync(req.body.currentpassword, user.password)) throw new Error('The current password you entered does not match our records.')
+          if (req.app.bcrypt.compareSync(req.body.passwordValueOne, user.password)) throw new Error('Please use a different password than your current one.')
 
           return req.app.db('users')
             .where('id', req.user.id)
             .first()
             .update({
-              password: req.app.bcrypt.hashSync(req.body.passwordOne)
+              password: req.app.bcrypt.hashSync(req.body.passwordValueOne)
             })
 
         }).then(result => {
@@ -262,3 +296,120 @@ exports.changePassword = function (req, res, next) {
   })
   
 }
+
+exports.addGithubAccount = function (req, res, next) {
+
+  req.assert('githubUsername', 'Github username cannot be empty.').notEmpty()
+  req.assert('githubLink', 'Link cannot be empty.').notEmpty()
+  req.assert('password', 'Password required.').notEmpty()
+
+  req.getValidationResult().then(result => {
+
+    if (!result.isEmpty()) {
+
+      let errors = result.array()[0]
+
+      res.json({
+        error: true,
+        message: errors.msg
+      })
+
+    } else {
+
+      req.app.db('users')
+        .where('id', req.user.id)
+        .first()
+        .then(user => {
+
+          if (!user) throw new Error('Something went wrong, we could not find your account')
+          if (!req.app.bcrypt.compareSync(req.body.password, user.password)) throw new Error('The current password you entered does not match our records.')
+
+          return req.app.db('users')
+            .where('id', req.user.id)
+            .first()
+            .update({
+              githubusername: req.body.githubUsername,
+              githublink: req.body.githubLink
+            })
+
+        }).then(result => {
+
+          if (!result) throw new Error('Something went wrong trying to update your github info, please try again')
+
+          res.json({
+            success: true,
+            message: `<h2>Success!</h2> <br> Congrats your Github info has been updated, your webpage will refresh in 5 seconds.` 
+          })
+
+        }).catch(err => {
+
+          res.json({
+            error: true,
+            message: err.message
+          })
+
+        })
+
+    }
+
+  })
+
+}
+
+exports.addLocation = function (req, res, next) {
+
+  req.assert('location', 'Location cannot be empty.').notEmpty()
+  req.assert('password', 'Password required.').notEmpty()
+
+  req.getValidationResult().then(result => {
+
+    if (!result.isEmpty()) {
+
+      let errors = result.array()[0]
+
+      res.json({
+        error: true,
+        message: errors.msg
+      })
+
+    } else {
+
+      req.app.db('users')
+        .where('id', req.user.id)
+        .first()
+        .then(user => {
+
+          if (!user) throw new Error('Something went wrong, we could not find your account')
+          if (!req.app.bcrypt.compareSync(req.body.password, user.password)) throw new Error('The current password you entered does not match our records.')
+
+          return req.app.db('users')
+            .where('id', req.user.id)
+            .first()
+            .update({
+              location: req.body.location
+            })
+
+        }).then(result => {
+
+          if (!result) throw new Error('Something went wrong trying to update your location, please try again')
+
+          res.json({
+            success: true,
+            message: `<h2>Success!</h2> <br> Congrats your Location has been updated, your webpage will refresh in 5 seconds.` 
+          })
+
+        }).catch(err => {
+
+          res.json({
+            error: true,
+            message: err.message
+          })
+
+        })
+
+    }
+
+  })
+
+}
+
