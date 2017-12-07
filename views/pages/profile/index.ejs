@@ -31,6 +31,12 @@
 
       <%- include('../../partials/'+page.profileView) %>
 
+      <% if (myAccount) { %>
+
+        <%- include('../../partials/'+page.createPosts) %>
+        
+      <% } %>
+
     </div>
     
   </div>

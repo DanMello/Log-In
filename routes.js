@@ -139,7 +139,7 @@ exports = module.exports = function(app, passport) {
     //Settings Page
     app.all('/account/settings*', ensureAuthenticated)
     app.all('/account/settings*', ensureVerified)
-    app.get('/account/settings/:username', require('./views/pages/settings').init)
+    app.get('/account/settings/', require('./views/pages/settings').init)
     app.post('/account/settings/changeEmail', require('./views/pages/settings').changeEmail)
     app.get('/account/settings/changeEmail/:email/:token', require('./views/pages/settings').verify)
     app.post('/account/settings/changeUserName', require('./views/pages/settings').changeUserName)

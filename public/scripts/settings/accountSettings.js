@@ -1,6 +1,32 @@
 //views/pages/settings/index.ejs  <-- Where this is being used
 let settingsModule = (function () {
 
+  window.onload = function () {
+
+    let url = new URL(window.location.href)
+    let focus = url.searchParams.get('focus')
+    let input = url.searchParams.get('input')
+
+    if (!!focus) {
+
+      let focusButton = document.querySelector('#' + focus)
+      let menuFunction = showMenu.bind(focusButton)
+
+      menuFunction()
+
+      let parentForm = focusButton.parentElement
+
+      while (parentForm.tagName !== 'FORM') {
+
+        parentForm = parentForm.parentElement
+      }
+
+      parentForm.querySelector(`input[name=${input}]`).focus()
+      
+    }
+
+  }
+
   //DOM reference to be reused for all query selections
   let subContainer = document.querySelector('#subContainer')
   
@@ -136,7 +162,13 @@ let settingsModule = (function () {
 
         if (parentForm.id !== 'changeEmail') {
 
-          setTimeout(function(){ location.reload() }, 5000)
+          setTimeout(function () {
+
+            let urlwithoutParams =  location.origin + location.pathname
+            
+            location.replace(urlwithoutParams)
+
+          }, 5000)
         }
 
       }

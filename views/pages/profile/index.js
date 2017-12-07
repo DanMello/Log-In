@@ -6,6 +6,7 @@ exports.init = function (req, res, next) {
     .then(user => {
 
       let page = {}
+      let myAccount
 
       if (!user) throw new Error('User not found.')
       if (!!req.user) {
@@ -17,17 +18,21 @@ exports.init = function (req, res, next) {
           
           page.header = 'verifiedHeader'
           page.profileView = 'profile/myProfile'
+          page.createPosts = 'profile/postsModule'
+          myAccount = true
 
         } else {
           
           page.header = 'verifiedHeader'
           page.profileView = 'profile/viewProfile'
+          myAccount = false
         }
 
       } else {
 
         page.header = 'profile/signupHeader'
         page.profileView = 'profile/viewProfile'
+        myAccount = false
       }
 
       let userObj = {
@@ -52,6 +57,7 @@ exports.init = function (req, res, next) {
       res.render('pages/profile' + req.filepath, {
         userObj,
         page,
+        myAccount
       })
       
     }).catch(err => {

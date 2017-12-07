@@ -1,23 +1,45 @@
 <html>
 <div style="border-radius: 10px; display: flex; flex-direction: column;">
-  <div style="position: relative; min-width: 1000px;">
-    <img src="<%= userObj.coverphoto %>" style="border-top-right-radius: 10px;border-top-left-radius: 10px;height:300px;position: absolute;width: 100%;object-fit: cover;top: 0">
-    <img src="<%= userObj.profilepic %>" style="margin-top:150px;margin-left: 20px;height: 200px; width: 200px; border-radius: 25%; object-fit: cover;position: relative;">
+  <div style="position: relative;min-width: 1000px;">
+    <div id="coverphotoCotainer" style="position: absolute; height: 300px; width: 100%;">
+      <img id="coverphotoItself" src="<%= userObj.coverphoto %>" style="border-top-right-radius: 10px;border-top-left-radius: 10px;position:absolute;height:100%;width: 100%;object-fit: cover;top: 0;">
+
+      <label id="editCoverPhotobutton" style="display:none;background: #5b88e8; position: absolute;right: 20px;bottom:20px;color: white;border-radius: 5px;padding: 10px;cursor: pointer;">Edit cover
+        <input id="coverPhotoInput" type="file" name=cover_photo" style="opacity: 0.0001;position: absolute;cursor: pointer;"></input>
+      </label>
+
+    </div>
+    <div id="profilephotoCotainer" style="display: flex;justify-content: center;position:relative;height: 200px; width: 200px;margin-top:150px;margin-left: 20px;">
+      <img id="profilePicID" src="<%= userObj.profilepic %>" style="border-radius: 25%; object-fit: cover;width: 100%;height: 100%;">
+      
+      <label id="editProfilePhotobutton" style="display:none;background: #5b88e8; position: absolute;bottom: 15px;color: white;border-radius: 5px;padding: 10px;cursor: pointer;">Edit profile picture
+        <input id='profilePicInput' type="file" name="profile_pic" style="opacity: 0.0001;position: absolute;cursor: pointer;"></input>
+      </label>
+
+    </div>
     <div style="display: flex;padding: 0px 20px 0px 20px;">
       <div style="display: flex; flex-direction: column;">
         <span style="font-size: 22px; font-weight: bold; margin-top: 10px;"><%= userObj.fullname %></span>
         <span style="font-size: 20px; margin-top: 10px;order: 1">Email: <%= userObj.email %></span>
         <% userObj.information.forEach(item => { %>
           <% for (const prop in item) { %>
-            <% if (!!item[prop] && (prop === 'github')) {%>
-              <% if (!!item[prop].link && !!item[prop].username) {%>
+            <% if (prop === 'github') { %>
+              <% if (!!item[prop].link && !!item[prop].username) { %>
                 <span style="font-size: 20px; margin-top: 10px;order: 0;"><%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <a style="color: blue; font-style: italic;" href="<%= item[prop].link %>"><%= item[prop].username %></a></span>
+              <% } else { %>
+                <div style="order: 2;margin-top: 5px;">
+                  <a id="githubLinkClicked" style="text-decoration: none; color: blue;font-size: 18px;" href="/account/settings/<%= userObj.username %>?focus=githubLinkButton&input=githubUsername">Add github</a>
+                </div>
               <% } %>
-            <% } else { %>
-              
             <% } %>
-            <% if (!!item[prop] && (prop !== 'github')) { %>
-              <span style="font-size: 20px; margin-top: 10px;order: 2"><%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <%= item[prop] %></span>
+            <% if (prop !== 'github') { %>
+              <% if (!!item[prop]) { %>
+                <span style="font-size: 20px; margin-top: 10px;order: 2"><%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <%= item[prop] %></span>
+              <% } else { %>
+                <div style="order: 3;margin-top: 5px;">
+                  <a id="<%=prop%>LinkClicked" style="text-decoration: none; color: blue;font-size: 18px;" href="/account/settings/<%= userObj.username %>?focus=locationLinkButton&input=location">Add <%= prop %></a>
+                </div>
+              <% } %>
             <% } %>
           <% } %>
         <% }) %>
@@ -41,3 +63,53 @@
   </div>
   <hr style="margin-top: 20px;display: block;height: 1px;border: 0;border-top: 1px solid #ccc;">
 </div>
+
+<script type="text/javascript">
+  
+  let coverphotoCotainer = document.querySelectorAll('#coverphotoCotainer, #profilephotoCotainer').forEach(constainer => {
+
+    constainer.addEventListener('mouseover', function () {
+      
+      this.lastElementChild.style.display = 'block'
+    })
+    constainer.addEventListener('mouseout', function () {
+
+      this.lastElementChild.style.display = 'none'
+    })
+
+  })
+
+  let navButtons = document.querySelectorAll('.navLinks').forEach(link => {
+
+    link.addEventListener('mouseover', function () {
+      
+      link.style.opacity = '.5'
+    })
+    link.addEventListener('mouseout', function () {
+
+      link.style.opacity = '1'
+    })
+
+  })
+
+  let profilePicture = document.querySelectorAll('#profilePicInput, #coverPhotoInput').forEach(input => {
+
+    input.addEventListener('change', handlePicture)
+
+  })
+
+
+  function handlePicture () {
+
+    let picture = this.files
+    let parent = this.parentElement.parentElement
+
+    let image = parent.querySelector('img')
+
+    var output = document.getElementById(image.id)
+
+    output.src = URL.createObjectURL(this.files[0])
+
+  }
+
+</script>

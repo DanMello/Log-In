@@ -1,15 +1,14 @@
 exports.init = function (req, res, next) {
 
   req.app.db('users')
-    .where('username', req.params.username)
+    .where('id', req.user.id)
     .first()
     .then(user => {
 
-      if (!user) throw new Error('User not found.')
-      if (!req.user.id === user.id) {
+      if (!user) {
         
         throw new Error('Invalid request')
-
+        
       } else {
 
         let userObj = {
