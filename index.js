@@ -39,8 +39,8 @@ const faviconPath = __dirname + '/public/favicon.ico'
 
 //App settings
 app.set('view engine', 'ejs')
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded(Config.settings.bodyParser))
+app.use(bodyParser.json(Config.settings.jsonParser))
+app.use(bodyParser.urlencoded(Config.settings.urlencodedParser))
 app.use(express.static(staticAssets))
 app.use(favicon(faviconPath))
 app.use(expressValidator(Config.validators))

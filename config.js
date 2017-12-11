@@ -47,8 +47,12 @@ exports = module.exports = function(app) {
         }
       }
     },
-    bodyParser: {
-      extended: false
+    urlencodedParser: {
+      extended: false,
+      limit: '1mb'
+    },
+    jsonParser: {
+      limit: '1mb'
     },
     session: {
       store: application.redisStore,

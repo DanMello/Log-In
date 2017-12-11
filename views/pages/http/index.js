@@ -19,6 +19,8 @@ exports.errorHandler = function(err, req, res, next) {
     res.render('pages/http' + req.filepath + page, errorObject || { message: err.message, error: err.stack })
     
   } else {
+
+    console.log(err)
     
     res.render('pages/http' + req.filepath + 'defaultError', {
         message: err.message || 'Something went wrong in our end, please try again in a few minutes',

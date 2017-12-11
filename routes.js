@@ -70,6 +70,7 @@ function checkDevice (req, res, next) {
 
   let url = req.app.config.settings[req.app.config.enviroment].mobileurl
 
+  
   if (req.headers.host === url) {
 
     req.filepath = '/mobile/'
@@ -79,6 +80,7 @@ function checkDevice (req, res, next) {
     req.filepath = '/'
     
   }
+  console.log(req.filepath)
 
   next()
 
@@ -135,6 +137,9 @@ exports = module.exports = function(app, passport) {
 
     //Profile page
     app.get('/account/profile/:username', require('./views/pages/profile').init)
+    app.get('/account/update*', ensureAuthenticated)
+    app.get('/account/update*', ensureVerified)
+    app.post('/account/update/uploadPhoto', require('./views/pages/profile').uploadPicture)
 
     //Settings Page
     app.all('/account/settings*', ensureAuthenticated)
@@ -149,11 +154,7 @@ exports = module.exports = function(app, passport) {
 
     //test route
     app.get('/test', (req, res, next) => {
-      res.render('pages/emails/emailChanged', {
-        imgurl: '/images/default.png',
-        username: "jdanmello",
-        email: 'dan-mello@gmail.com'
-      })
+      res.render('pages/profile/testcanvas')
     })
 
 }
