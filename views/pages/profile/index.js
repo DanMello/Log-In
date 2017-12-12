@@ -72,51 +72,72 @@ exports.init = function (req, res, next) {
 
 exports.uploadPicture = function (req, res, next) {
 
-  return new Promise((resolve, reject) => {
+  const base64Data = req.body.imagebase64.replace(/^data:image\/jpeg;base64,/, "")
+  const userId = req.user.id
+  const type = req.body.type
+  const currentPicturePath = req.user[type] || '/nah'
+  
+  const uuidv4 = require('uuid/v4')
+  const filename = uuidv4()
+  const path = require("path").resolve('.')
+  const fs = require('fs')
+  const dir = `${path}/public/images/tmp/${type}/${userId}/`
+  const dirWithFile = `${path}/public${currentPicturePath}`
 
-    console.log(req.body.type)
-
-    const base64Data = req.body.imagebase64.replace(/^data:image\/jpeg;base64,/, "")
+  if (fs.existsSync(dirWithFile)) {
     
-    const uuidv4 = require('uuid/v4')
-    const filename = uuidv4()
-    const path = require("path").resolve('.')
-    const fs = require('fs')
-    const dir = `${path}/public/images/tmp/${req.body.type}/${req.user.id}/`
+    fs.unlinkSync(dirWithFile)
 
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+  } else if (!fs.existsSync(dir)) {
 
-    let file = `${path}/public/images/tmp/${req.body.type}/${req.user.id}/${filename}.jpeg`
-    let dbStoredPath = `/images/tmp/${req.body.type}/${req.user.id}/${filename}.jpeg`
+    fs.mkdirSync(dir)
+  } 
 
-    fs.writeFile(file, base64Data, 'base64', function(err) {
+  let file = `${path}/public/images/tmp/${type}/${userId}/${filename}.jpeg`
 
-      if (err) res.json({error: true, message: "Something went wrong saving your picture please try again"})
-      
-      return req.app.db('users')
-        .where('id', req.user.id)
+  fs.writeFile(file, base64Data, 'base64', function(err) {
+
+    if (err) {
+
+      return res.json({error: true, message: "Something went wrong saving your picture please try again"})
+
+    } else {
+
+      req.app.db('users')
+        .where('id', userId)
         .first()
         .then(user => {
 
           if (!user) throw new Error('Something went wrong looking for your profile')
 
           let pictureType = {}
+          let dbStoredPath = `/images/tmp/${type}/${userId}/${filename}.jpeg`
 
-          pictureType[req.body.type] = dbStoredPath
-
-          console.log(req.body.type)
+          pictureType[type] = dbStoredPath
 
           return req.app.db('users')
-            .where('id', req.user.id)
+            .where('id', userId)
             .first()
             .update(pictureType)
+
+      }).then(results => {
+
+        if (!results) throw new Error('Something went wrong trying to upload your picture')
+
+        res.json({
+          message: 'Success uploading your picture, refresh your browser to view changes, this might take a few minutes.'
         })
 
-    })
-    
-  }).catch(err => {
+      }).catch(err => {
 
-    console.log(err)
+        res.json({
+          error: true,
+          message: err.message
+        })
+
+      })
+    } 
+
   })
-  
 }
+  

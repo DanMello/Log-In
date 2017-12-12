@@ -1,27 +1,43 @@
-// function loader () {
+function addLoader () {
 
-//   var loader = document.createElement('loading');
+  let loaderContainer = document.createElement('div')
+  let loader = document.createElement('img')
 
-//   loader.style.border = '16px solid #f3f3f3';
-//   loader.style['border-top'] = '16px solid #3498db';
-//   loader.style['border-radius'] = '50%';
-//   loader.style.width = "120px";
-//   loader.style.height = "120px";
-//   loader.style.position = 'absolute';
-//   loader.style.top = '50%';
+  let loaderContainerStyles = {
+    'width':'100%',
+    'height':'100%',
+    'position':'absolute',
+    'top':'0',
+    'display':'flex',
+    'justify-content':'center',
+    'align-items':'center',
+    'background-color': 'rgba(255, 255, 255, 1)',
+    'z-index':'999'
+  }
 
-//   mainContainer.appendChild(loader);
+  let loaderContainerStyle = loaderContainer.style
 
-// };
+  for (const prop in loaderContainerStyles) {
 
-// document.addEventListener("DOMContentLoaded", function(event) { 
-  
-//   var loader = document.getElementById('loading');
+    loaderContainerStyle[prop] = loaderContainerStyles[prop]
+  }
 
-//   if (loader !== null) {
-    
-//     loader.parentElement.removeChild(loader);
+  loaderContainer.id = 'loaderContainer'
+  loader.src = '/images/ajax-loader.gif'
 
-//   }
+  document.body.appendChild(loaderContainer)
+  loaderContainer.appendChild(loader)
+}
 
-// });
+function removeLoader () {
+
+  let loaderContainer = document.getElementById('loaderContainer')
+
+  if (loaderContainer !== null) {
+
+    loaderContainer.parentElement.removeChild(loaderContainer)
+  }
+
+}
+
+
