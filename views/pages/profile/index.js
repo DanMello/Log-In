@@ -75,7 +75,7 @@ exports.uploadPicture = function (req, res, next) {
   const base64Data = req.body.imagebase64.replace(/^data:image\/jpeg;base64,/, "")
   const userId = req.user.id
   const type = req.body.type
-  const currentPicturePath = req.user[type] || '/nah'
+  const currentPicturePath = req.user[type]
   
   const uuidv4 = require('uuid/v4')
   const filename = uuidv4()

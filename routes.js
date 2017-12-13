@@ -154,7 +154,7 @@ exports = module.exports = function(app, passport) {
 
     //test route
     app.get('/test', (req, res, next) => {
-      res.render('pages/profile/testcanvas')
+      res.send('ok')
     })
 
 }

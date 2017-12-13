@@ -134,11 +134,16 @@ let imageFunctions = (function() {
           })
         }
 
+        image.onerror = function (e) {
+
+          reject('Please select an image')
+        }
+
         image.src = URL.createObjectURL(imageFile)
 
       }).catch(err => {
 
-        throw err
+        throw new Error(err)
 
       })
 
@@ -369,14 +374,6 @@ let imageFunctions = (function() {
 
       resolve(canvas.toDataURL('image/jpeg'))
       
-    }).then(results => {
-
-      let finalImage = document.createElement('img')
-
-      finalImage.src = results
-
-      return finalImage
-
     }).then(finalImage => {
 
       return fetch('http://localhost/account/update/uploadPhoto', {
@@ -387,7 +384,7 @@ let imageFunctions = (function() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          imagebase64: finalImage.src,
+          imagebase64: finalImage,
           type: this.dataset.typePicture
         })
       })

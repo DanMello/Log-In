@@ -1,9 +1,9 @@
-<div style="border-radius: 10px; display: flex; flex-direction: column;">
-  <div style="position: relative;min-width: 1000px;">
+<div style="display: flex;">
+  <div style="background: white;position: relative;min-width: 1000px;border: 1px solid #ccc;border-top-left-radius: 10px;border-top-right-radius: 10px;padding-bottom: 20px;">
     <div id="coverphotoCotainer" data-picture="true" style="position: absolute; height: 300px; width: 100%;">
       <img id="coverphotoItself" src="<%= userObj.coverphoto %>" style="border-top-right-radius: 10px;border-top-left-radius: 10px;position:absolute;height:100%;width: 100%;object-fit: cover;top: 0;">
 
-      <label id="editCoverPhotobutton" style="display:none;background: #5b88e8; position: absolute;right: 20px;bottom:20px;color: white;border-radius: 5px;padding: 10px;cursor: pointer;">Edit cover
+      <label id="editCoverPhotobutton" style="display:none;overflow:hidden;background: #5b88e8; position: absolute;right: 20px;bottom:20px;color: white;border-radius: 5px;padding: 10px;cursor: pointer;">Edit cover
         <input id="coverPhotoInput" type="file" name="cover_photo" data-big-width="1000px" data-big-height="600px" data-small-height="300px" data-small-width="1000px" data-type-picture="coverphoto" data-heading="Drag to crop cover photo" style="opacity: 0.0001;position: absolute;cursor: pointer;"></input>
       </label>
 
@@ -60,5 +60,4 @@
       </div>
     </div>
   </div>
-  <hr style="margin-top: 20px;display: block;height: 1px;border: 0;border-top: 1px solid #ccc;">
 </div>
