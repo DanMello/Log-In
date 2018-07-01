@@ -33,7 +33,7 @@ exports = module.exports = function(app) {
       apps: [
         {
           name : 'jdanmello.com',
-          script : 'index.js',
+          script : './index.js',
         }
       ],
       deploy: {
