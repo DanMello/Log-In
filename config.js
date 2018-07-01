@@ -27,7 +27,7 @@ exports = module.exports = function(app) {
           database: process.env.DB_NAME
         }
       },
-      mobileurl: '10.0.0.178:3000' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
+      mobileurl: 'm.mellocloud.com' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
     },
     deployment: {
       apps: [
@@ -42,8 +42,8 @@ exports = module.exports = function(app) {
           host: '10.0.0.201', // local ip or public ip if im not connect to local connection
           ref: 'origin/master',
           repo: 'https://github.com/DanMello/jdanmello.com.git',
-          path: '/home/deploy/jdanmello',
-          'post-deploy' : 'nvm install && npm install && /root/.nvm/versions/node/v8.11.3/bin/pm2 reload ecosystem.config.js --env production'
+          path: '/home/deploy/deployConfig/jdanmello.com',
+          'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v8.11.3/bin/pm2 reload ecosystem.config.js --env production'
         }
       }
     },
