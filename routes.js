@@ -72,8 +72,6 @@ function checkDevice (req, res, next) {
 
   let url = req.app.config.settings[req.app.config.enviroment].mobileurl
 
-  console.log(req.headers.host)
-
   if (req.headers.host === url) {
 
     req.filepath = '/mobile/'

@@ -27,7 +27,7 @@ exports = module.exports = function(app) {
           database: process.env.DB_NAME
         }
       },
-      mobileurl: 'm.mellocloud.com' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
+      mobileurl: '24.62.99.13:3000'
     },
     deployment: {
       apps: [
