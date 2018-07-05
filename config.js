@@ -2,7 +2,7 @@ exports = module.exports = function(app) {
 
   let application = app || {}
   
-  let enviroment = process.env.NODE_ENV
+  let enviroment = process.env.NODE_ENV || 'development'
 
   let settings = {
     development: {

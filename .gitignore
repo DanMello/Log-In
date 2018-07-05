@@ -1,5 +1,5 @@
 node_modules/
 public/vendors/
-server-configuration/ssh
-ssh/
+server-configuration/
+keys/
 .env
