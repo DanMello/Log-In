@@ -4,6 +4,8 @@ exports = module.exports = function(app) {
   
   let enviroment = process.env.NODE_ENV || 'development'
 
+  console.log(enviroment)
+
   let settings = {
     development: {
       database: {
