@@ -29,36 +29,61 @@
 .loginItems {
 	display: flex;
 	flex-direction: column;
+	margin-top: 10px;
 }
 
-.loginItems label {
+.formInputs label {
 	font-size: 20px;
 }
 
-.loginItems input {
-    font-size: 19px;
-    padding: 5px 5px 5px 5px;
+.formInputs input {
+  font-size: 19px;
+  padding: 5px 5px 5px 5px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
 }
+
+.formInputs {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	font-weight: 100;
+}
+
 
 .button {
-    margin-top: 18px;
+  margin-top: 25px;
 }
 
-.button input { 	-webkit-appearance: none;
-	background: #5b88e8;
+.button input { 	
+	-webkit-appearance: none;
+	background: #40a3f0;
 	height: 40px;
 	color: white;
+	font-size: 19px;
+	font-weight: 100;
+	border: none;
 }
 
 #helpLinks {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	margin-top: 18px;
+	margin-top: 25px;
 }
 
 #recoverAccount, #createAccount {
-	font-size: 20px;
+	font-size: 19px;
+	font-weight: 100;
+}
+
+#recoverAccount a, #createAccount a {
+	color: #ccc;
+}
+
+#recoverAccount a:visited, #createAccount a:visited {
+	color: #ccc;
 }
 
 #loginError { 
@@ -120,11 +145,11 @@
 	<form id="loginForm" action="/alternate/login" method="post" onsubmit="return formSubmit.disable(this)">
 
 		<div id="loginError"><%= loginErrors %></div>
-		<div class="loginItems">
+		<div class="formInputs">
 			<label>Username or Email:</label>
 			<input type="email" name="username" value="<%= username %>">
 		</div>
-		<div class="loginItems">
+		<div class="formInputs">
 			<label>Password:</label>
 			<input type="password" name="password">
 		</div>
