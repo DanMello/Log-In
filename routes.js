@@ -14,6 +14,8 @@ function ensureAuthenticated (req, res, next) {
 
 function ensureVerified (req, res, next) {
 
+  console.log('verified')
+
   let tempAccess = req.user.tempVerificationExpires
 
   if (tempAccess !== null && tempAccess > Date.now()) {
@@ -39,6 +41,8 @@ function ensureVerified (req, res, next) {
 }
 
 function ensureSignedOut (req, res, next) {
+
+  console.log('signedout')
 
   if (req.isAuthenticated()) {
 
