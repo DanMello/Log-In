@@ -29,7 +29,7 @@ exports = module.exports = function(app) {
           database: process.env.DB_NAME
         }
       },
-      mobileurl: 'm.mellocloud.com'
+      mobileurl: 'm.jdanmello.com'
     },
     deployment: {
       apps: [
