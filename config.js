@@ -4,8 +4,6 @@ exports = module.exports = function(app) {
   
   let enviroment = process.env.NODE_ENV || 'development'
 
-  console.log(enviroment)
-
   let settings = {
     development: {
       database: {
@@ -45,7 +43,7 @@ exports = module.exports = function(app) {
           ref: 'origin/master',
           repo: 'https://github.com/DanMello/jdanmello.com.git',
           path: '/home/deploy/jdanmello.com',
-          'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v8.11.3/bin/pm2 reload ecosystem.config.js --env production'
+          'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v8.11.3/bin/pm2 reload ecosystem.config.js --env production --only jdanmello.com'
         }
       }
     },
@@ -91,5 +89,4 @@ exports = module.exports = function(app) {
     settings,
     validators
   }
-
 }
