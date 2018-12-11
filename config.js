@@ -27,7 +27,7 @@ exports = module.exports = function(app) {
           database: process.env.DB_NAME
         }
       },
-      mobileurl: '10.0.0.178:3000' // This is the ip of the vmware nginx server in my local network, i made port 3000 redirect to mobile because I dont have a domain and its just a project
+      mobileurl: 'm.jdanmello.com'
     },
     deployment: {
       apps: [
@@ -90,5 +90,4 @@ exports = module.exports = function(app) {
     settings,
     validators
   }
-
 }

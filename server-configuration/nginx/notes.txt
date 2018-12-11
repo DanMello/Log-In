@@ -1,9 +1,13 @@
-upstream backend {
+upstream jdanmello {
   server localhost:3000;
 }
 
+upstream mellocloud {
+  server localhost:3001;
+}
+
 server {
-  server_name localhost;
+  server_name jdanmello.com;
   listen 80;
 
   set $mobile_rewrite do_not_perform;
@@ -13,7 +17,7 @@ server {
   }
 
   if ($mobile_rewrite = perform) {
-    rewrite ^/(.*) $scheme://10.0.0.189$request_uri;
+    rewrite ^/(.*) $scheme://m.jdanmello.com$request_uri;
   }
 
   location / {
@@ -21,13 +25,13 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_pass http://backend;
+    proxy_pass http://jdanmello;
   }
 
 }
 
 server {
-  server_name 10.0.0.189;
+  server_name m.jdanmello.com;
   listen 80;
 
   location / {
@@ -35,7 +39,43 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_pass http://backend;
+    proxy_pass http://mellocloud;
+  }
+
+server {
+  server_name mellocloud.com;
+  listen 80;
+
+  set $mobile_rewrite do_not_perform;
+
+  if ($http_user_agent ~ "Mobile") {
+    set $mobile_rewrite perform;
+  }
+
+  if ($mobile_rewrite = perform) {
+    rewrite ^/(.*) $scheme://m.mellocloud.com$request_uri;
+  }
+
+  location / {
+    proxy_set_header HOST $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://mellocloud;
+  }
+
+}
+
+server {
+  server_name m.mellocloud.com;
+  listen 80;
+
+  location / {
+    proxy_set_header HOST $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://mellocloud;
   }
 
 }
