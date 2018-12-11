@@ -139,7 +139,7 @@ let settingsModule = (function () {
 
     }, {})
 
-    fetch('http://localhost/account/settings/' + parentForm.id, {
+    fetch(window.location.origin + '/account/settings/' + parentForm.id, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

@@ -1,6 +1,7 @@
  //Dependencies
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 const expressValidator = require('express-validator')
@@ -41,6 +42,7 @@ const faviconPath = __dirname + '/public/favicon.ico'
 app.set('view engine', 'ejs')
 app.use(bodyParser.json(Config.settings.jsonParser))
 app.use(bodyParser.urlencoded(Config.settings.urlencodedParser))
+app.use(cookieParser())
 app.use(express.static(staticAssets))
 app.use(favicon(faviconPath))
 app.use(expressValidator(Config.validators))
@@ -62,4 +64,4 @@ app.use(require('./views/pages/http/').errorHandler)
 app.utility = {}
 app.utility.nodemailer = require('./utils/nodemailer/')
 
-app.listen(3000)
+app.listen(3005)

@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
-
 #mainContainer {
   display: flex;
   flex-direction: column;
@@ -19,7 +18,10 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
+.disabled {
+  color: #ccc!important;
+  cursor: default!important;
+}
 </style>
 </head>
 <body>
@@ -31,20 +33,28 @@
     <div id="subContainer">
 
       <%- include('../../partials/'+page.profileView) %>
-
+ 
       <% if (myAccount) { %>
 
         <%- include('../../partials/'+page.createPosts) %>
         
       <% } %>
 
+      <div style="margin-top: 200px;">
+        
+      </div>
+
     </div>
     
   </div>
 
-  <script src="/scripts/scripts.js"></script>
+  <script src="/scripts/utils/loader.js"></script>
   <script src="/scripts/profile/hoverFunctions.js"></script>
   <script src="/scripts/profile/imageFunctions.js"></script>
+  <script src="/scripts/utils/cropImage.js"></script>
+  <script src="/scripts/utils/trimVideo2.js"></script>
+  <script src="/scripts/profile/pubsubprofile.js"></script>
+  <script src="/scripts/profile/postModule.js"></script>  
 
 </body>
 </html>

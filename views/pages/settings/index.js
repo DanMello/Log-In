@@ -24,7 +24,7 @@ exports.init = function (req, res, next) {
           location: user.location
         }
 
-        res.render('pages/settings' + req.filepath, {
+          res.render('pages/settings' + req.filepath, {
           userObj,
           page: {
             username: userObj.username,

@@ -35,7 +35,6 @@ exports.sendVerificationEmail = function(req, user, done) {
             type: 'verifcationEmail'
           })
           .del()
-
       }
 
     }).then(() => {
@@ -59,9 +58,7 @@ exports.sendVerificationEmail = function(req, user, done) {
     }).catch(err => {
 
       throw err
-        
     })
-  
 }
 
 
@@ -96,7 +93,6 @@ exports.verify = function(req, res, next) {
         expiredError.page = '/expiredtoken'
 
         throw expiredError
-
       }
 
       if (!req.user) {
@@ -108,7 +104,6 @@ exports.verify = function(req, res, next) {
       } else {
 
         return req.user
-
       }
 
     }).then(userReference => {
@@ -146,7 +141,5 @@ exports.verify = function(req, res, next) {
     }).catch(err => {
 
       next(err)
-
     }) 
-
 }

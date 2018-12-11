@@ -32,17 +32,17 @@ exports = module.exports = function(app) {
     deployment: {
       apps: [
         {
-          name : 'nodejs-app',
+          name : 'jdanmello.com',
           script : 'index.js',
         }
       ],
       deploy: {
         production: {
           user: 'deploy',
-          host: '10.0.0.169', //Host is the web server
+          host: '10.0.0.201', //Host is the web server
           ref: 'origin/master',
-          repo: 'https://github.com/DanMello/first-nodejs-project-login-page.git',
-          path: '/home/deploy/web/nodejs-app',
+          repo: 'https://github.com/DanMello/jdanmello',
+          path: '/home/deploy/jdanmello.com',
           'post-deploy' : 'nvm install && npm install && /home/deploy/.nvm/versions/node/v6.11.1/bin/pm2 reload ecosystem.config.js --env production'
         }
       }
@@ -56,6 +56,7 @@ exports = module.exports = function(app) {
     },
     session: {
       store: application.redisStore,
+      cookie: { maxAge: (60000 * 24 * 30) },
       secret: process.env.SESSION_SECRET || 'developmentSession',
       resave: false,
       saveUninitialized: false

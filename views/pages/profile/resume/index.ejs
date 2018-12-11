@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="/styles/globalContainerVerified.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  background: #F0F3F4;
+  min-height: 612px;
+}
+#subContainer {
+  min-width: 805px;
+  /*margin-top: 20px;*/
+  margin-bottom: 20px;
+}
+#profilePicture {
+  height: 200px;
+  width: 200px;
+  border-radius: 25%;
+  object-fit: cover;
+  transform: rotate(90deg);
+
+}
+#fullname {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+#email, #github, #phone {
+  color: blue;
+}
+</style>
+</head>
+<body>
+
+  <div id="mainContainer">
+
+    <div id="subContainer">
+        
+      <div style="display: flex; background: white; padding: 20px; border-radius: 10px;">
+        <div style="display: flex; flex-direction: column;">
+          <img id="profilePicture" src="/images/resume.JPG">
+          <span id="fullname">Daniel Mello</span>
+          <span style="font-size: 15px; margin-top: 10px;">Email: <span id="email">jdanmello@gmail.com</span></span>
+          <span style="font-size: 15px; margin-top: 10px;">Github: <span id="github">github.com/DanMello</span></span>
+          <span style="font-size: 15px; margin-top: 10px;">Cell: <span id="phone">(339)788-0346</span></span>
+        </div>
+        <div style="flex-grow: 1; margin-left: 20px;">
+          <h1>About me</h1>
+          <hr style="margin-top: 10px;">
+          <div style="margin-left: 10px;">
+            <h2 style="margin-top: 10px;">Knowledge</h2>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Basic</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>Html, Css ( 1.5 years )</li>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Programming Language</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>Javascript ( 1.5 years )</li>
+                <ul style="margin-left: 10px;margin-top: 5px;">
+                  <li>Frontend</li>
+                  <li>Backend with nodejs</li>
+                  <li>ES6</li>
+                  <li>Modular patterns</li>
+                  <li>Promises!!</li>
+                  <li>Ajax with fetch, and handling json responses</li>
+                  <li>Try to write clean reusable code</li>
+                </ul>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Javascript Frameworks</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>React and React-Native ( currently learning )</li>
+                <ul style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">
+                  <li>Single page web apps, and IOS development</li>
+                </ul>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Server Frameworks</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>nodejs ( 1.5 years )</li>
+                <ul style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">
+                  <li>Express</li>
+                  <li>Dotenv for storing passwords, and keys</li>
+                  <li>Ejs for view engine</li>
+                  <li>Knex</li>
+                  <li>Passportjs</li>
+                  <li>Bcrypt, for hash and salts encryptions for storing user passwords in db</li>
+                  <li>Token verification</li>
+                  <li>Nodemailer</li>
+                  <li>Pm2 deployment</li>
+                  <li>This will be an ever growing and changing list but you get the point</li>
+                </ul>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Databases</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>mysql ( 1.5 years )</li>
+                <ul style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">
+                  <li>Raw mysql code</li>
+                  <li>Knex framework for mysql in node js</li>
+                </ul>
+               <li>Redis, for storing sessions</li>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Testing Code</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>Jest ( currently Learning )</li>
+                <ul style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">
+                  <li>Dependency injection, to mock data and test for example fetch or database calls</li>
+                </ul>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Operating Systems</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>Ubuntu linux is my main operating system</li>
+              <li>Used to use windows but stopped after how bad web developing was on it</li>
+              <li>Mac osx, familiar with but dont own a mac myself, I like homebrew on it tho!</li>
+            </ul>
+            <h3 style="margin-top: 10px;margin-left: 20px;font-style: italic;">Others</h3>
+            <ul style="margin-left: 45px; margin-top: 5px;">
+              <li>Linux terminal</li>
+              <li>NGINX for server routing ( round robin ) and redirect mobile domain m.webiste.com</li>
+              <li>VMWare 12 for creating fake servers and testing stuff, instead of buying a server</li>
+              <li>Text editor preferred Sublime Text 3</li>
+              <li>Debugging using chrome</li>
+              <li>Tmux for terminal windows is pretty cool</li>
+              <li>Server security stuff</li>
+                <ul style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">
+                  <li>SSH keys and disable password entry.</li>
+                  <li>mysql stuff like deleting test database and changing default user and permissions</li>
+                </ul>
+            </ul>
+            <hr style="margin-top: 10px; margin-bottom: 10px;">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+
+</body>
+</html>

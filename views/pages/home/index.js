@@ -12,8 +12,8 @@ exports.init = function(req, res, next) {
         fullname: user.fullname,
         email: user.email,
         username: user.username,
-        profilepic: user.profilepic || '/images/default.png',
-        coverphoto: user.coverphoto || '/images/defaultcover.jpeg',
+        profilepic: user.profilepic || '/images/defaults/default.png',
+        coverphoto: user.coverphoto || '/images/defaults/defaultcover.jpeg',
         about: {
           github: user.githublink,
           location: user.location

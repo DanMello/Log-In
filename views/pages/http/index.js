@@ -1,6 +1,8 @@
 
 exports.errorHandler = function(err, req, res, next) {
 
+    console.log(err.status)
+
   if (err.status === 400) {
 
     /* 
@@ -19,15 +21,24 @@ exports.errorHandler = function(err, req, res, next) {
     res.render('pages/http' + req.filepath + page, errorObject || { message: err.message, error: err.stack })
     
   } else {
-
-    console.log(err)
     
-    res.render('pages/http' + req.filepath + 'defaultError', {
-        message: err.message || 'Something went wrong in our end, please try again in a few minutes',
-        errorStatus: err.status,
-        error: err.stack
-    })
+      console.log(res.headersSent)
 
+      // res.status(500).send('you"re fucked')
+
+    // if (!res.headersSent) {
+
+
+
+    // } else {
+
+    //   console.log(err)
+      
+    //   res.render('pages/http' + req.filepath + 'defaultError', {
+    //       message: err.message || 'Something went wrong in our end, please try again in a few minutes',
+    //       errorStatus: err.status,
+    //       error: err.stack
+    //   })      
+    // }
   }
-
 }

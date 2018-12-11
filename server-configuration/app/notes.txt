@@ -2,7 +2,9 @@
 /* 
 
   1. Make sure redis-server is running because that can mess up sessions
-  
+    
+  2. domain must match the nginx server domain when making ajax requests
 
+  3. 
 
 */

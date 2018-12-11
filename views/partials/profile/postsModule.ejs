@@ -1,7 +1,25 @@
-<div style="margin-top: 20px;background: white;border: 1px solid #ccc;height: 100px;">
+<form id="postModuleForm" style="margin-top: 20px;background: white;border: 1px solid #ccc;min-height: 120px;display: flex;flex-direction: column;max-width: 900px;">
 
-  <form>
-    <input type="" name="">
-  </form>
+  <textarea id="postArea" placeholder="Say something nice..." maxlength="220" style="font-size: 20px;resize:none;padding: 10px;margin:10px;border:none;outline: none;"></textarea>
 
-</div>
+  <div style="display: flex;justify-content: space-between;border-top: 1px solid #ccc;">
+
+    <div id="uploadIconParent" style="display: flex;justify-content: space-around;flex-grow: 1;align-items: center;">
+
+      <label style="z-index: 995">Pic
+        <i class="fa fa-camera" aria-hidden="true" style="font-size: 20px;color: #3366FF;cursor: pointer;"></i>
+        <input id="postPictureInput" type="file" accept="image/*" name="postPictureFile" name="post_picture_button" style="opacity: 0.0001;position: absolute;" multiple>
+      </label>
+      
+      <label style="z-index: 995">Video
+        <i id="postVideoInput" class="fa fa-video-camera" aria-hidden="true" style="font-size: 20px;color: #3366FF;cursor: pointer;"></i>
+        <input id="postVideoInput" type="file" accept=".mp4, .mov" name="postVideoFile" name="post_video_button" style="opacity: 0.0001;position: absolute;" multiple>
+      </label>
+      
+    </div>
+
+    <input type="submit" name="submit" value="Post Content" style="z-index: 998;border: none;padding: 10px;cursor: pointer;color: white;background: lightslategray;font-size: 20px;font-weight: bold;flex-basis: 50%;">
+  
+  </div>
+
+</form>

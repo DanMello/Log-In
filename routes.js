@@ -3,11 +3,9 @@ function ensureAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
 
     return next()
-
   }
 
   return res.redirect('/welcome/login')
-
 }
 
 function ensureVerified (req, res, next) {
@@ -17,7 +15,6 @@ function ensureVerified (req, res, next) {
   if (tempAccess !== null && tempAccess > Date.now()) {
 
     return next()
-
   }
 
   if ((!req.user.isVerified && req.user.oauth_provider === null)) {
@@ -32,8 +29,6 @@ function ensureVerified (req, res, next) {
 
     return next()
   }
-
-
 }
 
 function ensureSignedOut (req, res, next) {
@@ -41,11 +36,9 @@ function ensureSignedOut (req, res, next) {
   if (req.isAuthenticated()) {
 
     return res.redirect('/')
-
   }
 
   return next()
-
 }
 
 function emailAlreadyVerified (req, res, next) {
@@ -57,33 +50,29 @@ function emailAlreadyVerified (req, res, next) {
     isVerifiedError.status = 400
 
     return next(isVerifiedError)
-
   }
 
   return next()
-  
 }
 
 // So this function sets a path to render mobile HTML using the same routes based on the user agent "Mobile"
 
 function checkDevice (req, res, next) {
 
-  let url = req.app.config.settings[req.app.config.enviroment].mobileurl
+  let mobileUrl = req.app.config.settings[req.app.config.enviroment].mobileurl
 
-  
-  if (req.headers.host === url) {
+  req.fetchUrl = req.protocol + '://' + req.headers.host
+
+  if (req.headers.host === mobileUrl) {
 
     req.filepath = '/mobile/'
 
   } else {
 
     req.filepath = '/'
-    
   }
-  console.log(req.filepath)
 
   next()
-
 }
 
 exports = module.exports = function(app, passport) {
@@ -137,9 +126,15 @@ exports = module.exports = function(app, passport) {
 
     //Profile page
     app.get('/account/profile/:username', require('./views/pages/profile').init)
+    app.get('/account/resume', require('./views/pages/profile/resume').init)
     app.get('/account/update*', ensureAuthenticated)
     app.get('/account/update*', ensureVerified)
-    app.post('/account/update/uploadPhoto', require('./views/pages/profile').uploadPicture)
+    app.post('/account/update/uploadTmpPicture', require('./views/pages/profile').uploadTmpPicture)
+    app.post('/account/update/cropAndSave', require('./views/pages/profile').cropAndSave)
+    app.post('/account/update/cropAndReturn', require('./views/pages/profile').cropAndReturn)
+    app.post('/account/update/uploadPicsOrVids', require('./views/pages/profile').uploadPicsOrVids)
+    app.post('/account/update/trimVideoInfo', require('./views/pages/profile').trimVideoInfo)
+    app.post('/account/update/trimVideo', require('./views/pages/profile').trimVideo)
 
     //Settings Page
     app.all('/account/settings*', ensureAuthenticated)
@@ -154,7 +149,6 @@ exports = module.exports = function(app, passport) {
 
     //test route
     app.get('/test', (req, res, next) => {
-      res.send('ok')
+      res.render('pages/profile/test.ejs')
     })
-
 }

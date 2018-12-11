@@ -23,11 +23,7 @@ exports = module.exports = function(options) {
       } else {
 
         resolve()
-
       }
-
     })
-
   })
-
 }

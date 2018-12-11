@@ -3,3 +3,5 @@ public/vendors/
 server-configuration/ssh
 ssh/
 .env
+public/images/tmp
+public/images/profilepic
